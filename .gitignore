@@ -22,7 +22,10 @@
 
 # misc
 .DS_Store
+Thumbs.db
 *.pem
+*.zip
+*.tar.gz
 
 # debug
 npm-debug.log*
@@ -30,8 +33,15 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# local database
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel

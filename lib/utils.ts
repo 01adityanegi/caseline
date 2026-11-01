@@ -81,35 +81,40 @@ export function calculateDeadlineRisk(deadline: Date | string): {
 }
 
 // Status color helpers
-export function getCaseStatusColor(status: string): string {
-  const map: Record<string, string> = {
-    INTAKE: 'badge-info',
-    INVESTIGATION: 'badge-warning',
-    FILING: 'badge-warning',
-    HEARING: 'badge-muted',
-    JUDGMENT: 'badge-muted',
-    APPEAL: 'badge-warning',
-    CLOSED: 'badge-success',
-    ON_HOLD: 'badge-muted',
+export function getCaseStatusColor(status: string) {
+  const map: Record<string, { bg: string; text: string; dot: string; class: string }> = {
+    INTAKE: { bg: 'bg-blue-500/10', text: 'text-blue-600', dot: 'bg-blue-500', class: 'badge-info' },
+    INVESTIGATION: { bg: 'bg-amber-500/10', text: 'text-amber-600', dot: 'bg-amber-500', class: 'badge-warning' },
+    FILING: { bg: 'bg-purple-500/10', text: 'text-purple-600', dot: 'bg-purple-500', class: 'badge-warning' },
+    DISCOVERY: { bg: 'bg-indigo-500/10', text: 'text-indigo-600', dot: 'bg-indigo-500', class: 'badge-info' },
+    PLEADINGS: { bg: 'bg-cyan-500/10', text: 'text-cyan-600', dot: 'bg-cyan-500', class: 'badge-info' },
+    TRIAL: { bg: 'bg-red-500/10', text: 'text-red-600', dot: 'bg-red-500', class: 'badge-danger' },
+    HEARING: { bg: 'bg-indigo-500/10', text: 'text-indigo-600', dot: 'bg-indigo-500', class: 'badge-muted' },
+    JUDGMENT: { bg: 'bg-emerald-500/10', text: 'text-emerald-600', dot: 'bg-emerald-500', class: 'badge-success' },
+    APPEAL: { bg: 'bg-orange-500/10', text: 'text-orange-600', dot: 'bg-orange-500', class: 'badge-warning' },
+    CLOSED: { bg: 'bg-gray-500/10', text: 'text-gray-600', dot: 'bg-gray-500', class: 'badge-muted' },
+    ON_HOLD: { bg: 'bg-muted', text: 'text-muted-foreground', dot: 'bg-muted-foreground', class: 'badge-muted' },
   }
-  return map[status] || 'badge-muted'
+  const res = map[status] || { bg: 'bg-blue-500/10', text: 'text-blue-600', dot: 'bg-blue-500', class: 'badge-muted' }
+  return Object.assign(res, { toString: () => res.class })
 }
 
-export function getPriorityColor(priority: string): string {
-  const map: Record<string, string> = {
-    CRITICAL: 'badge-danger',
-    HIGH: 'badge-warning',
-    MEDIUM: 'badge-info',
-    LOW: 'badge-muted',
+export function getPriorityColor(priority: string) {
+  const map: Record<string, { bg: string; text: string; dot: string; class: string }> = {
+    CRITICAL: { bg: 'bg-red-500/10', text: 'text-red-600', dot: 'bg-red-500', class: 'badge-danger' },
+    HIGH: { bg: 'bg-amber-500/10', text: 'text-amber-600', dot: 'bg-amber-500', class: 'badge-warning' },
+    MEDIUM: { bg: 'bg-blue-500/10', text: 'text-blue-600', dot: 'bg-blue-500', class: 'badge-info' },
+    LOW: { bg: 'bg-muted', text: 'text-muted-foreground', dot: 'bg-gray-400', class: 'badge-muted' },
   }
-  return map[priority] || 'badge-muted'
+  const res = map[priority] || { bg: 'bg-muted', text: 'text-muted-foreground', dot: 'bg-gray-400', class: 'badge-muted' }
+  return Object.assign(res, { toString: () => res.class })
 }
 
-export function getRiskColor(score: number): string {
-  if (score >= 80) return 'text-danger'
-  if (score >= 60) return 'text-warning'
-  if (score >= 40) return 'text-yellow-500'
-  return 'text-success'
+export function getRiskColor(score: number) {
+  if (score >= 80) return { bg: 'bg-red-500/10', text: 'text-red-600', dot: 'bg-red-500', class: 'text-danger', toString: () => 'text-danger' }
+  if (score >= 60) return { bg: 'bg-amber-500/10', text: 'text-amber-600', dot: 'bg-amber-500', class: 'text-warning', toString: () => 'text-warning' }
+  if (score >= 40) return { bg: 'bg-yellow-500/10', text: 'text-yellow-600', dot: 'bg-yellow-500', class: 'text-yellow-500', toString: () => 'text-yellow-500' }
+  return { bg: 'bg-emerald-500/10', text: 'text-emerald-600', dot: 'bg-emerald-500', class: 'text-success', toString: () => 'text-success' }
 }
 
 // File size formatter

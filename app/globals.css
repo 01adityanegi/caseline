@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap');
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.ts";
 
 @layer base {
   :root {
@@ -101,13 +99,41 @@
     --ring: 224 100% 68%;
   }
 
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-sidebar: hsl(var(--sidebar));
+  --color-success: hsl(var(--success));
+  --color-warning: hsl(var(--warning));
+  --color-danger: hsl(var(--danger));
+  --color-info: hsl(var(--info));
+}
+
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
     box-sizing: border-box;
   }
 
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     font-family: 'Inter', sans-serif;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     -webkit-font-smoothing: antialiased;
@@ -120,6 +146,12 @@
 
   .font-mono, code, .case-number {
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  .font-hindi, [lang="hi"], .devanagari {
+    font-family: var(--font-devanagari), 'Noto Sans Devanagari', system-ui, sans-serif;
+    line-height: 1.85;
+    letter-spacing: 0.01em;
   }
 
   :focus-visible {
@@ -167,7 +199,7 @@
   }
 
   .card-hover {
-    @apply card transition-all duration-150 hover:shadow-md hover:border-primary/30 cursor-pointer;
+    @apply bg-card rounded-xl border border-border shadow-sm transition-all duration-150 hover:shadow-md hover:border-primary/30 cursor-pointer;
   }
 
   /* AI Feature Treatment */
@@ -218,31 +250,31 @@
   }
 
   .badge-success {
-    @apply badge;
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full;
     background: hsl(var(--success) / 0.12);
     color: hsl(var(--success));
   }
 
   .badge-warning {
-    @apply badge;
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full;
     background: hsl(var(--warning) / 0.12);
     color: hsl(var(--warning));
   }
 
   .badge-danger {
-    @apply badge;
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full;
     background: hsl(var(--danger) / 0.12);
     color: hsl(var(--danger));
   }
 
   .badge-info {
-    @apply badge;
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full;
     background: hsl(var(--info) / 0.12);
     color: hsl(var(--info));
   }
 
   .badge-muted {
-    @apply badge;
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full;
     background: hsl(var(--muted));
     color: hsl(var(--muted-foreground));
   }
@@ -397,5 +429,116 @@
     background: linear-gradient(90deg, transparent, hsl(var(--muted)), transparent);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
+  }
+}
+
+/* ============================================================
+   COURT & LEGAL CONVEYANCE PRINT STYLESHEET
+   Clean paper printing with unclipped Devanagari fonts
+   ============================================================ */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 15mm 18mm 15mm 18mm;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+    line-height: 1.65 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide entire application navigation, sidebars, headers, modals, overlays, and toolbars */
+  aside,
+  header,
+  nav,
+  .no-print,
+  button,
+  select,
+  input,
+  textarea,
+  .command-bar-overlay,
+  [role="dialog"],
+  .fixed,
+  .sticky,
+  .mobile-nav {
+    display: none !important;
+  }
+
+  /* Reset outer containers so no clipping occurs */
+  html,
+  body,
+  .app-shell,
+  .main-content,
+  main,
+  div,
+  article,
+  section {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .grid {
+    display: block !important;
+  }
+
+  .lg\:col-span-8 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Pure Printable Agreement Paper */
+  #printable-agreement {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+  }
+
+  #printable-agreement * {
+    color: #000000 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  #printable-agreement .text-muted-foreground {
+    color: #222222 !important;
+  }
+
+  #printable-agreement .bg-card,
+  #printable-agreement .bg-muted,
+  #printable-agreement .bg-muted\/20,
+  #printable-agreement .bg-muted\/30,
+  #printable-agreement .bg-muted\/40 {
+    background: #ffffff !important;
+  }
+
+  #printable-agreement .border,
+  #printable-agreement .border-border,
+  #printable-agreement .border-t,
+  #printable-agreement .border-b {
+    border-color: #666666 !important;
+  }
+
+  /* Prevent awkward page breaks across clauses and signatures */
+  .clause-item,
+  .avoid-break,
+  .signature-card {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .print-page-break {
+    page-break-after: always !important;
+    break-after: page !important;
   }
 }
