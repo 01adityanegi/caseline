@@ -1,0 +1,325 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  logo      String?
+  settings  String   @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users   User[]
+  clients Client[]
+  cases   Case[]
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  password     String
+  role         String    @default("ASSOCIATE")
+  avatar       String?
+  phone        String?
+  hourlyRate   Float     @default(0)
+  isActive     Boolean   @default(true)
+  organizationId String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  organization  Organization  @relation(fields: [organizationId], references: [id])
+  assignedCases Case[]        @relation("CaseLead")
+  tasks         Task[]        @relation("TaskAssignee")
+  timeEntries   TimeEntry[]
+  notes         Note[]
+  auditLogs     AuditLog[]
+  notifications Notification[]
+  aiInsights    AIInsight[]
+  communications Communication[]
+}
+
+model Client {
+  id             String   @id @default(cuid())
+  name           String
+  email          String?
+  phone          String?
+  type           String   @default("INDIVIDUAL")
+  address        String?
+  city           String?
+  state          String?
+  pin            String?
+  gstin          String?
+  pan            String?
+  notes          String?
+  organizationId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+  cases        Case[]
+  invoices     Invoice[]
+}
+
+model Case {
+  id             String   @id @default(cuid())
+  caseNumber     String   @unique
+  title          String
+  description    String?
+  status         String   @default("INTAKE")
+  priority       String   @default("MEDIUM")
+  practiceArea   String
+  court          String?
+  judge          String?
+  filingDate     DateTime?
+  closedDate     DateTime?
+  nextHearingDate DateTime?
+  caseValue      Float?
+  riskScore      Int      @default(0)
+  tags           String   @default("[]")
+  clientId       String
+  leadId         String?
+  organizationId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  client        Client         @relation(fields: [clientId], references: [id])
+  lead          User?          @relation("CaseLead", fields: [leadId], references: [id])
+  organization  Organization   @relation(fields: [organizationId], references: [id])
+  parties       CaseParty[]
+  documents     Document[]
+  tasks         Task[]
+  hearings      Hearing[]
+  deadlines     Deadline[]
+  timeEntries   TimeEntry[]
+  notes         Note[]
+  communications Communication[]
+  aiInsights    AIInsight[]
+  auditLogs     AuditLog[]
+}
+
+model CaseParty {
+  id      String @id @default(cuid())
+  caseId  String
+  role    String
+  name    String
+  email   String?
+  phone   String?
+  counsel String?
+  address String?
+
+  case Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+}
+
+model Document {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  filePath    String
+  fileName    String
+  mimeType    String
+  fileSize    Int      @default(0)
+  folder      String   @default("General")
+  tags        String   @default("[]")
+  status      String   @default("PROCESSING")
+  caseId      String?
+  uploadedBy  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  case     Case?             @relation(fields: [caseId], references: [id])
+  versions DocumentVersion[]
+  chunks   DocumentChunk[]
+}
+
+model DocumentVersion {
+  id            String   @id @default(cuid())
+  documentId    String
+  version       Int      @default(1)
+  filePath      String
+  extractedText String?
+  pageCount     Int?
+  createdAt     DateTime @default(now())
+
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+}
+
+model DocumentChunk {
+  id         String @id @default(cuid())
+  documentId String
+  chunkIndex Int
+  text       String
+  pageNumber Int    @default(1)
+  metadata   String @default("{}")
+
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  status      String    @default("TODO")
+  priority    String    @default("MEDIUM")
+  dueDate     DateTime?
+  completedAt DateTime?
+  isRecurring Boolean   @default(false)
+  recurRule   String?
+  caseId      String?
+  assigneeId  String?
+  parentId    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  case     Case?   @relation(fields: [caseId], references: [id])
+  assignee User?   @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  parent   Task?   @relation("Subtasks", fields: [parentId], references: [id])
+  subtasks Task[]  @relation("Subtasks")
+}
+
+model Hearing {
+  id          String   @id @default(cuid())
+  title       String
+  date        DateTime
+  time        String?
+  court       String?
+  judge       String?
+  type        String   @default("HEARING")
+  status      String   @default("SCHEDULED")
+  outcome     String?
+  notes       String?
+  caseId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  case Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+}
+
+model Deadline {
+  id          String   @id @default(cuid())
+  title       String
+  date        DateTime
+  type        String   @default("FILING")
+  status      String   @default("PENDING")
+  riskScore   Int      @default(0)
+  notes       String?
+  caseId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  case Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+}
+
+model TimeEntry {
+  id          String   @id @default(cuid())
+  description String
+  hours       Float
+  rate        Float
+  billable    Boolean  @default(true)
+  date        DateTime @default(now())
+  invoiceId   String?
+  caseId      String
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  case    Case    @relation(fields: [caseId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  invoice Invoice? @relation(fields: [invoiceId], references: [id])
+}
+
+model Invoice {
+  id         String    @id @default(cuid())
+  number     String    @unique
+  status     String    @default("DRAFT")
+  total      Float
+  tax        Float     @default(0)
+  notes      String?
+  dueDate    DateTime?
+  paidAt     DateTime?
+  lineItems  String    @default("[]")
+  clientId   String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  client      Client      @relation(fields: [clientId], references: [id])
+  timeEntries TimeEntry[]
+}
+
+model Note {
+  id         String   @id @default(cuid())
+  content    String
+  visibility String   @default("INTERNAL")
+  caseId     String
+  authorId   String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  case   Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [authorId], references: [id])
+}
+
+model Communication {
+  id        String   @id @default(cuid())
+  direction String   @default("OUTBOUND")
+  channel   String   @default("EMAIL")
+  subject   String?
+  body      String
+  sentAt    DateTime @default(now())
+  caseId    String
+  userId    String
+  createdAt DateTime @default(now())
+
+  case Case @relation(fields: [caseId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  action     String
+  entityType String
+  entityId   String
+  diff       String?
+  userId     String?
+  caseId     String?
+  createdAt  DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+  case Case? @relation(fields: [caseId], references: [id])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  type      String   @default("INFO")
+  read      Boolean  @default(false)
+  link      String?
+  userId    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model AIInsight {
+  id        String   @id @default(cuid())
+  type      String
+  content   String
+  sources   String   @default("[]")
+  caseId    String?
+  userId    String?
+  createdAt DateTime @default(now())
+
+  case Case? @relation(fields: [caseId], references: [id])
+  user User? @relation(fields: [userId], references: [id])
+}
