@@ -371,4 +371,4 @@ If you find this project interesting, consider giving this repository a ⭐ on G
 
 **CaseLine — Less Paperwork. Smarter Law. Better Outcomes.**
 
-Built with ❤️ by Team Litti Choka for HackIndia 2026.
+
