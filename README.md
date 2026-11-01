@@ -1,4 +1,11 @@
-# CaseLine: Autonomous Legal OS & AgreementStudio
+# CaseLine — Autonomous Legal OS & AgreementStudio
+
+[![Next.js](https://img.shields.io/badge/Next.js-16.4.3-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.3.0-blue?style=flat-square&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-v4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-5.22.0-2D3748?style=flat-square&logo=prisma)](https://www.prisma.io/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
 > Built for high-velocity litigation, court limitation governance, and autonomous bilingual contract generation in English and formal legal Devanagari Hindi.
 
@@ -6,71 +13,93 @@
 
 ## Overview
 
-Legal teams across India struggle with fragmented files, missed court limitation deadlines, and manual conveyancing drafting. CaseLine centralizes case dossiers, court calendar compliance, and introduces **AgreementStudio** — an autonomous guided generator producing court-admissible agreements from minimal inputs with zero API key dependencies and optional Gemini AI refinement.
+Legal teams across India face fragmented case files, missed limitation periods, and time-consuming conveyancing workflows. **CaseLine** unites litigation matter management with **AgreementStudio** — an autonomous generator producing court-admissible, bilingual legal agreements from structured prompts or guided wizards, with zero API key dependencies and optional Gemini AI refinement.
 
-### Flagship Module: AgreementStudio
-- **14+ Structured Indian Templates**:
-  - **Rental & Property**: Residential Rent (11-Month Leave & License), Commercial Lease Deed, Agreement to Sell, Sale Deed Draft, Rent Receipt, Tenant Notice.
-  - **Business & Work**: Freelance Service & AI Consulting Agreement, Employment Contract, Non-Disclosure Agreement (NDA), Partnership Deed, Consultancy Agreement, Vendor & Supply Agreement.
-  - **Personal**: Friendly Loan with Promissory Note, General & Special Power of Attorney (GPA/SPA), Sworn General Affidavit.
-- **Bilingual Simultaneous Compilation**:
-  - English & formal Devanagari Hindi (backed by formal legal glossary).
-  - Four viewing modes: English Only, Hindi Only, Side-by-Side (2-column desktop / stacked mobile), and Sequential Execution.
-  - Automatic phonetic transliteration of party names and Indian addresses into Devanagari with live inline editing.
-  - Dual English & Hindi Indian numbering words (`"Rupees Twenty-Eight Thousand Only"` / `"अट्ठाइस हज़ार रुपये मात्र"`).
-- **Indian Statutory Compliance & State Pointers**:
-  - Built-in legal rules engine covering Section 17 of the Registration Act 1908 (11-month rule vs compulsory registration).
+### Flagship Modules
+
+#### 1. AgreementStudio (Bilingual Contract Generation)
+- **14+ Indian Statutory Templates**:
+  - **Rental & Property**: Residential Rent (11-Month Leave & License), Commercial Lease Deed, Agreement to Sell, Sale Deed Draft, Rent Receipt, Tenant Eviction Notice.
+  - **Business & Employment**: Freelance Service & AI Consulting, Full-time Employment Contract, Mutual Non-Disclosure Agreement (NDA), Partnership Deed, Consultancy Agreement, Vendor & Supply Master Agreement.
+  - **Personal & Conveyancing**: Friendly Loan with Promissory Note, General & Special Power of Attorney (GPA/SPA), Sworn General Affidavit.
+- **Simultaneous Dual-Language Compilation**:
+  - English and formal legal Devanagari Hindi backed by statutory Indian terminology.
+  - 4 Viewing Modes: English Only, Hindi Only, Side-by-Side (2-column on desktop, stacked on mobile), and Sequential Execution.
+  - Automatic phonetic transliteration of party names and Indian addresses into Devanagari.
+  - Dual Indian numbering format in words (`"Rupees Twenty-Eight Thousand Only"` / `"अट्ठाइस हज़ार रुपये मात्र"`).
+- **Statutory Rules & State Compliance Engine**:
+  - Built-in legal rules engine checking Section 17 of the Registration Act, 1908 (11-month rule vs compulsory registration).
   - State-specific stamp duty schedules and direct e-stamping portal links (Delhi, Maharashtra, Karnataka, Uttar Pradesh, Haryana, Tamil Nadu).
-- **Legally Binding Digital E-Signatures**:
-  - Dual modality: Typed cursive signature or Touch/Mouse drawn signature canvas.
-  - Statutory compliance check under Section 65B & Section 3 of the Information Technology Act, 2000.
-  - Immutable audit logging with signer IP address, device user-agent, and cryptographic timestamp.
-- **AI Judicial Copilot**:
-  - **Describe-to-Agreement**: Natural language prompt (voice or text) parser that extracts deal parameters into structured fields.
-  - **Risk and Fairness Meter**: Party-perspective scoring (0–100%) flagging one-sided clauses with 1-click balanced rewrites.
-  - **Plain-Language Explainer**: Explains any legal clause in simple English and Hindi.
-  - **Missing Clause Finder**: Scans agreement for absent protective clauses (e.g. Arbitration Act 1996, Force Majeure).
-  - **Negotiation Assistant**: Formulates balanced counter-proposals with courteous email/WhatsApp messages.
-  - **Attach to Case**: Link finalized agreements directly to active litigation matters or client ledgers in one click.
+- **Legally Admissible E-Signatures (IT Act, 2000)**:
+  - Dual signature capture: typed cursive font or touch/mouse drawing pad.
+  - Statutory Section 65B electronic record declaration.
+  - Cryptographic audit trail with IP address, device user-agent, and timestamp.
+  - Instant verification QR code and WhatsApp sharing link.
+
+#### 2. Litigation Case OS
+- **Court Limitation Risk Engine**: Automatic deadline calculation with color-coded risk alerts.
+- **Hearing Preparation Tracker**: Daily cause lists, judge notes, and previous order summaries.
+- **Document Vault**: Folder hierarchy, OCR chunking, and case dossier attachments.
+- **Multi-Role Access Control (RBAC)**: Fine-grained permissions for Admin, Partner, Associate, Paralegal, and Client.
+- **Time Tracking & Invoicing**: Billable hour timers and Indian GST compliant invoices.
+
+#### 3. AI Judicial Copilot
+- **Describe-to-Agreement**: Natural language prompt parser extracting parties, rent, deposits, and dates into structured fields.
+- **Risk & Fairness Meter**: Perspective-based scoring (0–100%) flagging one-sided clauses with 1-click balanced rewrites.
+- **Plain-Language Explainer**: Simplifies complex legal jargon into plain English and Hindi.
+- **Missing Clause Finder**: Scans agreements for absent protective clauses (Arbitration Act 1996, Force Majeure, Severability).
+- **Zero-Dependency Fallback**: 100% deterministic rules execute locally even when no Gemini API key is provided.
 
 ---
 
-## Tech Stack & Architecture
+## Tech Stack
 
-- **Framework**: Next.js 16.4.3 (App Router with Turbopack)
-- **Database & ORM**: SQLite / PostgreSQL via Prisma 5.22.0
-- **Auth**: NextAuth.js v5 (Credentials with Role-Based Access Control: Admin, Partner, Associate, Paralegal, Client)
-- **Styling**: Tailwind CSS v4, Lucide React (Strict zero emoji rule across all UI, comments, and notifications)
-- **Typography**: Inter (Body), Source Serif 4 (Court Pleadings & Paper Drafts), Noto Sans Devanagari (Hindi with `line-height: 1.85` for unclipped matras)
-- **AI Refinement**: Google Gemini 1.5 Flash (with 100% deterministic rule-based fallback when no API key is provided)
-- **Testing**: Node Native Test Runner with TypeScript (`tsx --test`)
+| Layer | Technology |
+|---|---|
+| **Framework** | Next.js 16.4.3 (App Router with Turbopack) |
+| **Runtime & UI** | React 19.3.0, TypeScript 5.9.3 |
+| **Styling** | Tailwind CSS v4, Lucide React Icons |
+| **Typography** | Inter, Source Serif 4 (Pleadings), Noto Sans Devanagari |
+| **Database & ORM** | SQLite / PostgreSQL via Prisma 5.22.0 |
+| **Authentication** | NextAuth.js v5 (Role-Based Access Control) |
+| **AI Processing** | Google Gemini 1.5 Flash (with local deterministic fallback) |
+| **Testing** | Node Native Test Runner (`tsx --test`) |
 
 ---
 
-## Quickstart & Setup
+## Getting Started
 
-### 1. Clone & Install Dependencies
+### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-org/hackindia.git
-cd hackindia
+git clone https://github.com/01adityanegi/caseline.git
+cd caseline
+```
+
+### 2. Install Dependencies
+```bash
 npm install
 ```
 
-### 2. Environment Variables
-Create a `.env` file in the project root:
+### 3. Configure Environment Variables
+Copy `.env.example` to `.env`:
+```bash
+cp .env.example .env
+```
+
+Default configuration in `.env`:
 ```env
 # Database
 DATABASE_URL="file:./dev.db"
 
 # NextAuth Secret
-NEXTAUTH_SECRET="caseline-hackindia-super-secret-key-2026"
+NEXTAUTH_SECRET="caseline-super-secret-key-change-in-production-2026"
 NEXTAUTH_URL="http://localhost:3000"
 
-# Optional: Gemini API Key (If omitted, app runs deterministically)
+# Optional: Google Gemini API Key (If omitted, app runs in deterministic mode)
 GEMINI_API_KEY=""
 ```
 
-### 3. Initialize Database & Seed Sample Data
+### 4. Initialize Database & Seed Demo Data
 ```bash
 npx prisma generate
 npx prisma db push
@@ -78,129 +107,55 @@ npx tsx prisma/seed.ts
 npx tsx prisma/seed-agreements.ts
 ```
 
-### 4. Run Development Server
+### 5. Launch Development Server
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Demo Credentials
-| Role | Email | Password |
-|---|---|---|
-| **Admin** | `admin@caseline.in` | `caseline123` |
-| **Partner** | `arjun@caseline.in` | `caseline123` |
-| **Associate** | `sanjeev@caseline.in` | `caseline123` |
-| **Client** | `client@caseline.in` | `caseline123` |
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## Running Unit Tests
-To execute the automated test suite verifying amount-to-words, Devanagari transliteration, legal glossary dictionary, and placeholder compilation:
+## Demo Accounts
+
+All demo accounts use password: `caseline123`
+
+| Role | Email | Capabilities |
+|---|---|---|
+| **Admin** | `admin@caseline.in` | Full system access, firm settings, user management |
+| **Partner** | `arjun@caseline.in` | Case assignment, bill approval, agreement signing |
+| **Associate** | `sanjeev@caseline.in` | Case filing, document drafting, time tracking |
+| **Client** | `client@caseline.in` | View assigned cases, review invoices, e-sign agreements |
+
+---
+
+## Automated Tests
+
+Run the test suite to verify the legal calculation engine, amount-to-words converters, and transliteration helpers:
+
 ```bash
 npm test
 ```
 
----
-
-## How to Add a New Template
-
-Templates are defined declaratively in `/templates/` as structured JSON/TypeScript schemas. New templates can be added without modifying UI code:
-
-```typescript
-import { AgreementTemplateDefinition } from './types'
-
-export const customServiceTemplate: AgreementTemplateDefinition = {
-  code: 'custom_maintenance_contract',
-  category: 'Business & Work',
-  titleEn: 'Annual Maintenance Contract (AMC)',
-  titleHi: 'वार्षिक रखरखाव अनुबंध (एएमसी)',
-  descriptionEn: 'Standard commercial service and IT equipment maintenance agreement.',
-  descriptionHi: 'वाणिज्यिक सेवा एवं उपकरण रखरखाव हेतु मानक अनुबंध।',
-  estimatedMinutes: 5,
-  iconName: 'Wrench',
-  languages: ['EN', 'HI'],
-  sampleData: {
-    clientName: 'Meridian Tech',
-    providerName: 'Apex Services',
-    annualFee: 60000,
-    startDate: '2026-11-01',
-    city: 'New Delhi',
-    state: 'Delhi'
-  },
-  fields: [
-    {
-      id: 'annualFee',
-      labelEn: 'Annual Maintenance Fee (INR)',
-      labelHi: 'वार्षिक रखरखाव शुल्क (रुपये)',
-      type: 'currency',
-      required: true,
-      section: 'payment'
-    }
-  ],
-  clauses: [
-    {
-      id: 'amc_scope',
-      titleEn: '1. Scope of Preventive Maintenance',
-      titleHi: '1. निवारक रखरखाव का दायरा',
-      textEn: 'The Service Provider shall conduct quarterly inspections and resolve hardware faults within 24 hours of notification.',
-      textHi: 'सेवा प्रदाता त्रैमासिक निरीक्षण करेगा तथा सूचना प्राप्त होने के 24 घंटे के भीतर तकनीकी खामियों का समाधान करेगा।'
-    }
-  ]
-}
-```
-
-Add your template object to `ALL_TEMPLATES` in `templates/index.ts` and run `npx tsx prisma/seed-agreements.ts`. The template library, wizard, and compiler will pick it up automatically.
+Test coverage includes:
+- Indian numbering currency converter (English & Devanagari Hindi)
+- Phonetic transliteration algorithms
+- Indian statutory legal glossary
+- Dynamic clause compilation and conditional placeholder substitutions
+- AI helper fallbacks and ambiguity detection
 
 ---
 
-## 2-Minute Hackathon Demo Script
+## Progressive Web App (PWA)
 
-Follow this step-by-step walkthrough to present the flagship capabilities:
-
-1. **Step 1: Open Template Library**
-   - Click **AgreementStudio** in the sidebar or navigate to `/agreements/templates`.
-   - Filter by chip: click **Rental & Property**.
-   - Note the estimated drafting time and language availability tags.
-2. **Step 2: Launch Smart Wizard**
-   - Click **Use Template** on **Residential Rent Agreement**.
-   - Notice the 5-step progress indicator and autosave drafts.
-3. **Step 3: Test Describe-to-Agreement**
-   - Click the microphone icon or type into the Describe box:
-     > *"I am renting my flat in Noida to Rahul Sharma for 28,000 a month for 11 months."*
-   - Click **Extract Deal Terms** (or click **Fill with sample data** for instant demonstration).
-   - Show how the AI extracts the monthly rent, security deposit, duration, and parties.
-4. **Step 4: Review Parties & Devanagari Transliteration**
-   - Click **Next: Parties**.
-   - Notice that landlord "Rajesh Sharma" and tenant "Rahul Verma" automatically generate editable Devanagari transliterations ("राजेश शर्मा", "राहुल वर्मा") without clipping matras.
-5. **Step 5: Review Terms & Amount in Words**
-   - Click **Next: Terms** and review the auto-formatted Indian currency values.
-   - Note that `"Rupees Twenty-Eight Thousand Only"` and `"अट्ठाइस हज़ार रुपये मात्र"` are generated simultaneously.
-6. **Step 6: Toggle Optional Clauses**
-   - Click **Next: Optional Clauses**.
-   - Toggle **Add a pet policy** or **Arbitration clause** and explain how the contract conditionally adapts.
-7. **Step 7: Generate & View Live Paper Preview**
-   - Select **Both (Side-by-Side)** and click **Generate Agreement**.
-   - Admire the paper-styled document with authentic serif legal typography.
-   - Click the language toggle to switch between English, Hindi, and Side-by-Side columns.
-8. **Step 8: Run Risk & Fairness Meter**
-   - Switch to the **AI** tab on the right panel.
-   - Select perspective: **Tenant**.
-   - Click **Calculate Fairness Score** to see real-time score calculation and one-click balanced clause rewrites.
-9. **Step 9: Digital E-Sign under IT Act 2000**
-   - Click the **E-Sign** button in the header toolbar.
-   - Choose **Type Signature** or draw on the signature pad.
-   - Check the statutory Section 65B consent box and click **Confirm & Affix Signature**.
-   - Notice the signature badge updating with cryptographic timestamp and IP address.
-10. **Step 10: Export & Attach to Case**
-    - Click **Export / Print** to preview the PDF print sheet.
-    - Click **Share** to see the WhatsApp `wa.me` link and the authentic verification QR code.
-    - Click **Attach to Case** and link the agreement to `CASE-0001 (Meridian Technologies)` in one click.
+CaseLine is responsive across mobile, tablet, and desktop viewports:
+- **Mobile Bottom Navigation**: One-tap access to Dashboard, Cases, Agreements, and Calendar.
+- **Dynamic Viewport Height (`dvh`)**: Immune to mobile address bar collapse and layout shifts.
+- **Touch-Optimized Canvas**: Smooth digital signature capture with touch-action isolation.
+- **Font Safeguards**: 16px minimum on inputs preventing iOS Safari auto-zoom.
 
 ---
 
-## PWA & Mobile Responsiveness
-CaseLine is a certified Progressive Web App with zero horizontal overflow:
-- **Mobile Bottom Navigation**: Instant thumb access to Dashboard, Cases, Agreements, Calendar, and Menu.
-- **Dynamic Viewport (`dvh`)**: Prevents layout shifts on mobile Safari & Chrome address bar movement.
-- **Form Safeguards**: `font-size: 16px` on mobile inputs to eliminate iOS auto-zoom bugs.
-- **Touch-Optimized E-Sign**: Smooth drawing canvas with touch-action isolation.
+## License
+
+This project is licensed under the MIT License.

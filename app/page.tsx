@@ -23,9 +23,6 @@ export default function LandingPage() {
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
             <a href="#features" className="hover:text-white transition-colors">Features</a>
             <a href="#workflow" className="hover:text-white transition-colors">How it works</a>
-            <Link href="/pitch" className="text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1 transition-colors">
-              <Sparkles className="w-3.5 h-3.5" /> Pitch Deck
-            </Link>
             <a href="#security" className="hover:text-white transition-colors">Security</a>
           </div>
 
@@ -71,21 +68,15 @@ export default function LandingPage() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/pitch"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-semibold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 shadow-xl shadow-amber-500/20 transition-all hover:scale-[1.02]"
-            >
-              <Sparkles className="w-5 h-5 text-slate-950" />
-              View Pitch Deck (PPT)
-            </Link>
-            <Link
               href="/login"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-xl shadow-blue-600/30 transition-all hover:scale-[1.02]"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-base font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-xl shadow-blue-600/30 transition-all hover:scale-[1.02]"
             >
               Explore Interactive Demo
+              <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/cases"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-semibold bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-base font-semibold bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 transition-all"
             >
               View Pipeline
             </Link>
