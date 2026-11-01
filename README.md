@@ -243,66 +243,6 @@ flowchart TD
     M --> N
 
     N --> O[Unified Legal Workspace]
-```
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js 20+
-- npm
-- Google Gemini API key
-- Git
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/HackIndiaXYZ/ai-for-lawyers-hackathon-litti-choka.git
-
-cd ai-for-lawyers-hackathon-litti-choka
-```
-
-### 2. Install Dependencies
-
-```bash
-npm install
-```
-
-### 3. Configure Environment Variables
-
-Create a `.env` file in the project root.
-
-```env
-DATABASE_URL="file:./dev.db"
-
-GEMINI_API_KEY="your_gemini_api_key"
-
-AUTH_SECRET="your_secure_random_secret"
-```
-
-### 4. Configure Prisma
-
-```bash
-npx prisma generate
-npx prisma db push
-```
-
-### 5. Run the Development Server
-
-```bash
-npm run dev
-```
-
-Open your browser and navigate to:
-
-```text
-http://localhost:3000
-```
-
-**Note:** The current repository snapshot does not include a `package.json`. Restore or add the project's dependency manifest and scripts before running the installation commands above.
-
 ---
 
 ## 🎯 Target Users
@@ -352,16 +292,6 @@ By combining AI with legal workflow management, CaseLine aims to make legal oper
 **Category:** AI for Lawyers
 
 **Repository:** https://github.com/HackIndiaXYZ/ai-for-lawyers-hackathon-litti-choka
-
----
-
-## ⚠️ Disclaimer
-
-CaseLine is an AI-assisted legal productivity and case management platform.
-
-AI-generated content may contain inaccuracies and should always be reviewed and verified by qualified legal professionals before being used in actual legal proceedings or signed agreements.
-
-CaseLine does not replace professional legal judgment or constitute legal advice.
 
 ---
 
