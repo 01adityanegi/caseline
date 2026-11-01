@@ -1,369 +1,111 @@
-# ⚖️ CaseLine — The Autonomous AI Legal OS
+# CaseLine — AI-Powered Legal Case Management
 
-### AI-Powered Legal Case Management & Agreement Generation Platform
+CaseLine is an AI-assisted legal workspace built for the Indian legal ecosystem. It brings case and client management, legal document organization, hearing and deadline tracking, agreement drafting, and AI-powered legal assistance into one platform.
 
-[![HackIndia 2026](https://img.shields.io/badge/HackIndia-2026-blue)](https://github.com/HackIndiaXYZ/ai-for-lawyers-hackathon-litti-choka)
-[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Language-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![Prisma](https://img.shields.io/badge/ORM-Prisma-2D3748?logo=prisma)](https://www.prisma.io/)
-[![AI](https://img.shields.io/badge/AI-Google%20Gemini-orange)](https://ai.google.dev/)
+This project was developed by **Team Litti Choka** for **HackIndia 2026 — AI for Lawyers**.
 
-**CaseLine** is an AI-powered legal operating system designed to simplify litigation management, automate repetitive legal workflows, and help lawyers make better-informed decisions.
+## What it does
 
-Built for the Indian legal ecosystem, CaseLine brings case management, document intelligence, deadline monitoring, bilingual agreement generation, and AI-powered legal assistance into one unified workspace.
+- **Case management:** organize cases, clients, parties, notes, communications, and case status.
+- **AI legal assistance:** generate case summaries, extract information from legal documents, build timelines, answer questions about case material, and prepare hearing briefs.
+- **Deadline Guardian:** track hearings and filing dates, highlight potential deadline risks, and suggest follow-up actions.
+- **AgreementStudio:** generate and review agreements with English/Hindi support, explain legal clauses, flag missing or unclear clauses, and assist with clause improvements.
+- **Document management:** keep case-related files organized and maintain document versions and extracted text.
+- **Practice operations:** manage tasks, calendars, time entries, billing, invoices, teams, notifications, and reports.
 
----
+> AI output is assistive only. Lawyers should independently verify all legal information, dates, citations, and generated documents before relying on them.
 
-## 🚨 The Problem
+## Technology
 
-Legal professionals spend a significant amount of time managing administrative tasks instead of focusing on legal strategy and client representation.
+- Next.js 16 and React 19
+- TypeScript
+- Prisma ORM with SQLite
+- NextAuth.js credentials authentication
+- Google Gemini API (Gemini 1.5 Flash integration)
+- Zod and bcryptjs
 
-Some of the major challenges include:
+## Repository status and running locally
 
-- **Missed Legal Deadlines:** Important court hearings, filing dates, and statutory limitation periods are often tracked manually.
-- **Document Management:** Legal documents are scattered across folders, making information retrieval difficult.
-- **Manual Drafting:** Preparing agreements, legal documents, and client updates consumes valuable time.
-- **Poor Case Visibility:** Lawyers lack a unified view of case progress, upcoming hearings, and pending tasks.
-- **Billing Inefficiency:** Manual time tracking and invoice preparation create unnecessary administrative overhead.
-
-## 💡 Our Solution
-
-CaseLine transforms traditional legal practice management into an intelligent, AI-assisted workflow.
-
-It provides a centralized platform where lawyers can manage cases, organize documents, monitor deadlines, generate legal agreements, and interact with case information using AI.
-
-Our goal is simple:
-
-**Let lawyers focus on law, not paperwork.**
-
----
-
-## ✨ Key Features
-
-### 1. 🤖 AI-Powered Legal Intelligence
-
-- AI-powered case summarization.
-- Smart legal document information extraction.
-- Automatic case timeline generation.
-- Ask the Case — interact with case documents using natural-language questions.
-- AI-generated answers with document and page references.
-- AI-assisted legal drafting.
-- Hearing preparation briefs.
-- AI-powered client communication drafts.
-
-### 2. ⏰ Deadline Guardian
-
-An intelligent deadline monitoring system designed to help legal professionals stay ahead of critical dates.
-
-- Tracks upcoming hearings and statutory deadlines.
-- Identifies potentially risky deadlines.
-- Assigns risk scores from 0–100.
-- Provides recommended next actions.
-- Helps monitor filing obligations and limitation-related risks.
-
-### 3. 📄 AgreementStudio
-
-Generate structured legal agreements with AI assistance.
-
-Supported agreement templates include:
-
-- Residential Rent Agreement
-- Commercial Rent Agreement
-- Property Sale Agreement
-- Sale Deed
-- Rent Receipt
-- Tenant Notice
-- Freelance Service Agreement
-- Employment Agreement
-- Non-Disclosure Agreement (NDA)
-- Partnership Deed
-- Consultancy Agreement
-- Vendor Supply Agreement
-- Loan Promissory Note
-- Power of Attorney
-- General Affidavit
-
-**Additional capabilities:**
-
-- Describe-to-Agreement generation.
-- Bilingual English and Hindi agreement support.
-- Clause explanation and improvement.
-- Missing clause detection.
-- Agreement risk and fairness analysis.
-- Clause negotiation assistance.
-- State-specific legal notes.
-
-### 4. 📁 Smart Document Management
-
-- Centralized legal document storage.
-- Case-linked document organization.
-- Document version management.
-- Document text extraction and chunk storage.
-- Structured document information management.
-
-### 5. ⚖️ Case Management
-
-- Create and manage legal cases.
-- Organize clients and parties.
-- Track case status and priorities.
-- Assign case responsibilities.
-- Maintain case notes and communications.
-- View case-specific information in one workspace.
-
-### 6. 📅 Court Calendar & Hearing Management
-
-- Track upcoming court hearings.
-- Maintain hearing schedules.
-- Monitor statutory deadlines.
-- Organize case-related dates and activities.
-
-### 7. 💰 Billing & Time Tracking
-
-- Track billable and non-billable hours.
-- Manage time entries.
-- Maintain client invoices.
-- Monitor billing information and payments.
-- Generate operational reports.
-
-### 8. 👥 Team & Access Management
-
-- Role-based access control.
-- Organization-based data management.
-- Team member management.
-- Task assignment and workload tracking.
-- Notifications and audit logs.
-
----
-
-## 🛠️ Tech Stack
-
-| Category | Technology |
-|---|---|
-| Frontend | Next.js 16 |
-| UI Framework | React 19 |
-| Language | TypeScript |
-| AI Integration | Google Gemini 1.5 Flash |
-| Database | SQLite |
-| ORM | Prisma |
-| Authentication | NextAuth.js |
-| Password Security | bcryptjs |
-| Validation | Zod |
-| Typography | Inter, Source Serif 4, Noto Sans Devanagari |
-| Icons | Lucide React |
-
----
-
-## 🧠 AI Architecture
-
-CaseLine uses a centralized AI service architecture to manage its AI-powered features.
-
-**AI Engine:** Google Gemini 1.5 Flash
-
-The AI service layer handles:
-
-1. Legal document information extraction.
-2. Case summarization.
-3. Timeline generation.
-4. Context-based case question answering.
-5. Deadline risk analysis.
-6. Recommended next actions.
-7. Client communication generation.
-8. Hearing preparation.
-9. Agreement generation and analysis.
-
-### AI Fallback Mechanism
-
-CaseLine also includes a mock-response fallback mechanism.
-
-When the Gemini API key is unavailable or an API request fails, supported AI features can return predefined mock responses.
-
-This helps demonstrate the platform's workflows even without an active AI API connection.
-
----
-
-## 🏗️ Database Architecture
-
-CaseLine uses SQLite with Prisma ORM for relational data management.
-
-The database schema includes models for:
-
-- Organizations
-- Users
-- Clients
-- Cases
-- Case Parties
-- Documents
-- Document Versions
-- Document Chunks
-- Tasks
-- Hearings
-- Deadlines
-- Time Entries
-- Invoices
-- Notes
-- Communications
-- Notifications
-- Audit Logs
-- AI Insights
-- Agreements
-- Agreement Parties
-- Agreement Versions
-- Agreement Signatures
-- Saved Parties
-- Clause Library Items
-
----
-
-## 🔄 How CaseLine Works
-
-```mermaid
-flowchart TD
-    A[Lawyer / Legal Professional] --> B[CaseLine Platform]
-
-    B --> C[Case Management]
-    B --> D[Document Management]
-    B --> E[AgreementStudio]
-    B --> F[Deadline Guardian]
-
-    C --> G[Case Data]
-    D --> H[Document Processing]
-    E --> I[Agreement Generation]
-    F --> J[Deadline Analysis]
-
-    G --> K[AI Service Layer]
-    H --> K
-    I --> K
-    J --> K
-
-    K --> L[Google Gemini 1.5 Flash]
-    K --> M[Mock AI Fallback]
-
-    L --> N[AI-Powered Insights]
-    M --> N
-
-    N --> O[Unified Legal Workspace]
-```
-
----
-
-## 🚀 Getting Started
+The source currently published in this repository is **missing its `package.json` dependency manifest**. That means the normal Node.js setup cannot be completed from this snapshot yet. The commands below are the intended setup workflow once the matching `package.json` is restored from the original development project.
 
 ### Prerequisites
 
-- Node.js 20+
+- Node.js 20 or newer
 - npm
-- Google Gemini API key
 - Git
+- A Google Gemini API key (optional for flows that use the built-in mock fallback)
 
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/HackIndiaXYZ/ai-for-lawyers-hackathon-litti-choka.git
-
 cd ai-for-lawyers-hackathon-litti-choka
 ```
 
-### 2. Install Dependencies
+### 2. Restore the project manifest
+
+Make sure the project root contains the original `package.json` and, if available, its lockfile (for example, `package-lock.json`). These files are not present in the current published snapshot. Do not generate an arbitrary manifest: restore the one used by the project so the dependency versions and scripts match the source code.
+
+### 3. Install dependencies
+
+After restoring the manifest:
 
 ```bash
 npm install
 ```
 
-### 3. Configure Environment Variables
+### 4. Configure environment variables
 
-Create a `.env` file in the project root.
+Create a `.env` file in the project root:
 
 ```env
 DATABASE_URL="file:./dev.db"
-
-GEMINI_API_KEY="your_gemini_api_key"
-
-AUTH_SECRET="your_secure_random_secret"
+AUTH_SECRET="replace_with_a_long_random_secret"
+GEMINI_API_KEY="your_google_gemini_api_key"
 ```
 
-### 4. Configure Prisma
+Generate a secure value for `AUTH_SECRET`; never commit your real `.env` file or API keys.
+
+### 5. Generate Prisma Client and initialize the database
 
 ```bash
 npx prisma generate
 npx prisma db push
 ```
 
-### 5. Run the Development Server
+### 6. Start the development server
 
 ```bash
 npm run dev
 ```
 
-Open your browser and navigate to:
+Open [http://localhost:3000](http://localhost:3000).
+
+**Important:** Steps 3–6 depend on restoring the project's original dependency manifest and scripts. The commands have not been verified against a clean local installation of this repository snapshot.
+
+## Project structure
 
 ```text
-http://localhost:3000
+app/          Next.js routes, pages, and API handlers
+components/   UI components grouped by feature
+lib/          Authentication, database, AI, and agreement logic
+prisma/       Prisma schema and seed scripts
+public/       Static assets
+templates/    Agreement templates
+scripts/      Project utility scripts
 ```
 
-**Note:** The current repository snapshot does not include a `package.json`. Restore or add the project's dependency manifest and scripts before running the installation commands above.
+## Hackathon
+
+- **Event:** HackIndia 2026
+- **Track:** AI for Lawyers
+- **Team:** Litti Choka
+- **Project:** CaseLine
+
+## Disclaimer
+
+CaseLine is a legal productivity tool, not a substitute for a qualified advocate or professional legal advice. AI-generated content can be incomplete or inaccurate. Always verify it against authoritative sources and applicable law before use.
 
 ---
 
-## 🎯 Target Users
-
-- Independent advocates
-- Law firms
-- Legal associates
-- Corporate legal departments
-- Litigation teams
-- Legal consultants
-
----
-
-## 🌍 Impact
-
-CaseLine aims to:
-
-- Reduce repetitive administrative work.
-- Improve visibility into case progress.
-- Help legal professionals monitor critical deadlines.
-- Simplify legal document organization.
-- Make agreement drafting more accessible through bilingual support.
-- Improve collaboration between legal teams.
-
-By combining AI with legal workflow management, CaseLine aims to make legal operations more organized, efficient, and accessible.
-
----
-
-## 🔮 Future Roadmap
-
-- Advanced Indian legal research with verified case-law references.
-- Integration with Indian court and e-Courts data sources.
-- Improved OCR and multilingual document processing.
-- Secure cloud-based document storage.
-- Digital signing and document verification integrations.
-- Advanced legal analytics and predictive insights.
-- Enhanced mobile experience.
-- More regional Indian language support.
-
----
-
-## 👨‍💻 Hackathon Project
-
-**Event:** HackIndia 2026  
-**Team Name:** Litti Choka  
-**Project Name:** CaseLine  
-**Category:** AI for Lawyers
-
-**Repository:** https://github.com/HackIndiaXYZ/ai-for-lawyers-hackathon-litti-choka
-
----
-
-## ⚠️ Disclaimer
-
-CaseLine is an AI-assisted legal productivity and case management platform.
-
-AI-generated content may contain inaccuracies and should always be reviewed and verified by qualified legal professionals before being used in actual legal proceedings or signed agreements.
-
-CaseLine does not replace professional legal judgment or constitute legal advice.
-
-
-**CaseLine — Less Paperwork. Smarter Law. Better Outcomes.**
-
-Built with ❤️ by Team Litti Choka for HackIndia 2026.
+Built by **Team Litti Choka** for HackIndia 2026.
