@@ -153,7 +153,7 @@ export default function Sidebar({ user }: SidebarProps) {
           )}
           {!collapsed && (
             <button
-              onClick={() => signOut({ callbackUrl: '/login' })}
+              onClick={() => signOut({ callbackUrl: '/' })}
               className="text-white/30 hover:text-white/70 transition-colors"
               title="Sign out"
             >

@@ -171,7 +171,7 @@ export default function MobileNav({ user }: MobileNavProps) {
             {/* Logout button */}
             <div className="pt-4 border-t border-slate-800">
               <button
-                onClick={() => signOut({ callbackUrl: '/login' })}
+                onClick={() => signOut({ callbackUrl: '/' })}
                 className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-red-400 bg-red-500/10 hover:bg-red-500/20 transition-colors min-h-[44px]"
               >
                 <LogOut className="w-4 h-4" />
