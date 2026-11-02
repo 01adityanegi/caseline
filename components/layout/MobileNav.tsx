@@ -45,6 +45,7 @@ export default function MobileNav({ user }: MobileNavProps) {
   ]
 
   const MORE_ITEMS = [
+    { href: '/arguments', label: 'Argument AI (Client & Owner)', icon: Scale, badge: 'New AI' },
     { href: '/agreements/templates', label: 'Template Library', icon: Scale },
     { href: '/documents', label: 'Document Vault', icon: FileText },
     { href: '/clients', label: 'Clients Directory', icon: Users },

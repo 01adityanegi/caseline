@@ -137,17 +137,26 @@ export default async function DashboardPage() {
             {formatDate(new Date(), 'EEEE, dd MMMM yyyy')} — {data.kpis.activeCases} active {isClient ? 'matter(s) with firm' : 'cases'}
           </p>
         </div>
-        {isClient ? (
-          <Link href="/agreements" className="btn-primary">
-            <FileText className="w-4 h-4" />
-            My Agreements
+        <div className="flex items-center gap-2">
+          <Link
+            href="/arguments"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-blue-500/10 text-blue-600 hover:bg-blue-500/20 border border-blue-500/20 transition-colors"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+            Argument AI
           </Link>
-        ) : (
-          <Link href="/cases/new" className="btn-primary">
-            <Briefcase className="w-4 h-4" />
-            New Case
-          </Link>
-        )}
+          {isClient ? (
+            <Link href="/agreements" className="btn-primary">
+              <FileText className="w-4 h-4" />
+              My Agreements
+            </Link>
+          ) : (
+            <Link href="/cases/new" className="btn-primary">
+              <Briefcase className="w-4 h-4" />
+              New Case
+            </Link>
+          )}
+        </div>
       </div>
 
       {/* KPI Cards */}

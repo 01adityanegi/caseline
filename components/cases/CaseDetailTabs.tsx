@@ -4,9 +4,11 @@ import { useState } from 'react'
 import {
   FileText, Calendar, Clock, CheckSquare, Brain, MessageSquare,
   DollarSign, Shield, FileCheck, Sparkles, Send, Download, Plus,
-  User, Building2, AlertTriangle, ArrowRight, RefreshCw, Check
+  User, Building2, AlertTriangle, ArrowRight, RefreshCw, Check, Scale
 } from 'lucide-react'
 import { formatDate, formatCurrency, getPriorityColor, getCaseStatusColor, STATUS_LABELS } from '@/lib/utils'
+
+import ArgumentAnalyzerClient from '@/components/arguments/ArgumentAnalyzerClient'
 
 interface CaseDetailProps {
   caseData: any
@@ -96,6 +98,7 @@ export default function CaseDetailTabs({ caseData, users }: CaseDetailProps) {
           { id: 'deadlines', label: `Deadlines (${caseData.deadlines?.length || 0})`, icon: Clock },
           { id: 'tasks', label: `Tasks (${caseData.tasks?.length || 0})`, icon: CheckSquare },
           { id: 'ai-assistant', label: 'Ask AI (RAG)', icon: Brain, badge: 'AI' },
+          { id: 'arguments', label: 'Argument AI', icon: Scale, badge: 'New AI' },
           { id: 'briefing', label: 'Hearing Prep', icon: Sparkles, badge: 'AI' },
           { id: 'billing', label: 'Billing & Time', icon: DollarSign },
           { id: 'notes', label: 'Notes', icon: MessageSquare },
@@ -402,6 +405,19 @@ export default function CaseDetailTabs({ caseData, users }: CaseDetailProps) {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* Argument AI Tab */}
+      {activeTab === 'arguments' && (
+        <div className="space-y-4">
+          <ArgumentAnalyzerClient
+            initialCaseId={caseData.id}
+            initialArgument={
+              caseData.description ||
+              `In ${caseData.title} (${caseData.caseNumber}), the claimant claims breach of contractual obligations and financial damages. The opposing party argues delay was caused by force majeure and unapproved change requests, withholding final milestone clearance.`
+            }
+          />
         </div>
       )}
 

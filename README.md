@@ -43,7 +43,15 @@ Legal teams across India face fragmented case files, missed limitation periods, 
 - **Multi-Role Access Control (RBAC)**: Fine-grained permissions for Admin, Partner, Associate, Paralegal, and Client.
 - **Time Tracking & Invoicing**: Billable hour timers and Indian GST compliant invoices.
 
-#### 3. AI Judicial Copilot
+#### 3. AI Judicial Copilot & Argument Dissector
+- **AI Argument Evaluator & Optimizer (Client & Owner)**:
+  - Dissects any legal claim, dispute stance, or contract clause in simple, plain language.
+  - Generates clear, non-jargon **Advantages and Disadvantages**.
+  - **As a Client**: Breaks down client benefits, financial/delay risks, and an actionable plain-language takeaway.
+  - **As an Owner / Firm**: Evaluates owner leverage, exposure/statutory vulnerabilities, and practical advice.
+  - **What Will Improve**: Actionable strategic upgrades, crucial evidence to gather with urgency ratings, pre-emptive counter-argument defenses, and an AI-optimized watertight argument reformulation.
+  - **Bilingual English & Devanagari Hindi**: Simple language summaries for both clients and owners.
+  - **Interactive Presets**: Commercial lease lockouts, software milestone payment withholding, non-compete covenants, bayana forfeiture, and defective equipment refunds.
 - **Describe-to-Agreement**: Natural language prompt parser extracting parties, rent, deposits, and dates into structured fields.
 - **Risk & Fairness Meter**: Perspective-based scoring (0–100%) flagging one-sided clauses with 1-click balanced rewrites.
 - **Plain-Language Explainer**: Simplifies complex legal jargon into plain English and Hindi.

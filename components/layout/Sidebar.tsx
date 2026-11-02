@@ -38,6 +38,7 @@ interface SidebarProps {
 const FIRM_NAV_ITEMS = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/cases', label: 'Cases', icon: Briefcase },
+  { href: '/arguments', label: 'Argument AI', icon: Scale, badge: 'New AI' },
   { href: '/agreements', label: 'AgreementStudio', icon: FileText, badge: 'AI' },
   { href: '/agreements/templates', label: 'Templates', icon: Scale },
   { href: '/documents', label: 'Documents', icon: FolderOpen },
@@ -52,6 +53,7 @@ const FIRM_NAV_ITEMS = [
 const CLIENT_NAV_ITEMS = [
   { href: '/dashboard', label: 'Client Portal', icon: LayoutDashboard },
   { href: '/cases', label: 'My Cases', icon: Briefcase },
+  { href: '/arguments', label: 'Argument AI', icon: Scale, badge: 'New AI' },
   { href: '/agreements', label: 'My Agreements', icon: FileText, badge: 'E-Sign' },
   { href: '/documents', label: 'My Documents', icon: FolderOpen },
   { href: '/billing', label: 'My Invoices', icon: Receipt },

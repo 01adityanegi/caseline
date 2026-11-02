@@ -148,6 +148,30 @@ export default function LandingPage() {
               </p>
             </div>
 
+            <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-900/90 via-blue-950/30 to-slate-900/90 border border-blue-500/30 hover:border-blue-400/60 transition-all md:col-span-3">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="space-y-3 max-w-2xl">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-semibold">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Flagship Feature</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white">AI Argument Dissector & Client/Owner Optimizer</h3>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    Our AI evaluates any dispute argument in simple, non-lawyer language. It analyzes advantages, disadvantages, and strategic risks from both the <strong>Client</strong> and <strong>Owner</strong> perspectives, and gives you a concrete breakdown of <strong>What Will Improve</strong>—including missing evidence, pre-emptive counter-arguments, and watertight reformulations.
+                  </p>
+                </div>
+                <div className="flex-shrink-0">
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-lg shadow-blue-500/25 transition-all"
+                  >
+                    Try Argument AI
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+
             <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-emerald-500/40 transition-all">
               <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-5 border border-emerald-500/20">
                 <Users className="w-6 h-6" />
