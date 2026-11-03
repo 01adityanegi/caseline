@@ -10,3 +10,4 @@ export default async function SignUpPage() {
   const session = await auth()
   return <UnifiedLandingPage currentUser={session?.user || null} />
 }
+

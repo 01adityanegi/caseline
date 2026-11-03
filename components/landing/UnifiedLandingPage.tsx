@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, Suspense } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Scale,
   Sparkles,
@@ -264,46 +265,75 @@ function UnifiedLandingPageContent({ currentUser }: UnifiedLandingPageProps) {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-20 pb-12 overflow-hidden">
+      <section className="relative pt-16 sm:pt-24 pb-12 overflow-hidden">
         {/* Glow gradients */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-blue-600/20 to-purple-600/20 blur-[120px] rounded-full pointer-events-none" />
 
-        <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-slate-300 text-xs font-medium mb-8 shadow-inner">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-slate-300 text-xs font-medium mb-6 sm:mb-8 shadow-inner"
+          >
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
             <span>Built for Modern Law Firms, Advocates & In-House Legal Counsel</span>
-          </div>
+          </motion.div>
 
-          <h1 className="font-serif text-5xl md:text-7xl font-bold tracking-tight text-white leading-[1.1] mb-6">
-            The Intelligent Workspace for <br />
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.15] sm:leading-[1.1] mb-6"
+          >
+            The Intelligent Workspace for <br className="hidden sm:inline" />
             <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
               High-Stakes Legal Matters
             </span>
-          </h1>
+          </motion.h1>
 
-          <p className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-base sm:text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed font-light"
+          >
             Centralize your cases, documents, court hearings, and deadlines. Powered by judicial AI that parses contracts, predicts limitation risks, drafts briefs, and automates administrative burden.
-          </p>
+          </motion.p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => scrollToAuth('signin')}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-base font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-xl shadow-blue-600/30 transition-all hover:scale-[1.02] cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-base font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-xl shadow-blue-600/30 transition-all cursor-pointer"
             >
               Explore Interactive Demo
               <ArrowRight className="w-4 h-4" />
-            </button>
-            <button
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => scrollToAuth('signup')}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-base font-semibold bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 transition-all cursor-pointer"
             >
               <UserPlus className="w-4 h-4 text-blue-400" />
               Create Firm Account
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
 
           {/* Instant Test Login Banner (Direct 1-Click Sign In) */}
-          <div className="mt-10 p-4 rounded-xl bg-slate-900/80 border border-slate-800 max-w-2xl mx-auto text-left text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-8 sm:mt-10 p-4 rounded-xl bg-slate-900/80 border border-slate-800 max-w-2xl mx-auto text-left text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg"
+          >
             <div className="flex items-center gap-2.5">
               <Lock className="w-4 h-4 text-blue-400 flex-shrink-0" />
               <span>
@@ -313,11 +343,11 @@ function UnifiedLandingPageContent({ currentUser }: UnifiedLandingPageProps) {
             <button
               onClick={() => handleSignIn(undefined, 'admin@caseline.in', 'caseline123')}
               disabled={signInLoading}
-              className="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1 cursor-pointer transition-colors px-3 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/20"
+              className="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1 cursor-pointer transition-colors px-3 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/20 self-start sm:self-auto"
             >
               {signInLoading ? 'Signing in...' : '1-Click Sign In'} <ChevronRight className="w-3.5 h-3.5" />
             </button>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -715,8 +745,8 @@ function UnifiedLandingPageContent({ currentUser }: UnifiedLandingPageProps) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-blue-500/40 transition-all">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-blue-500/40 hover:-translate-y-1 transition-all duration-200 shadow-sm hover:shadow-md">
               <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-5 border border-blue-500/20">
                 <Brain className="w-6 h-6" />
               </div>
@@ -726,7 +756,7 @@ function UnifiedLandingPageContent({ currentUser }: UnifiedLandingPageProps) {
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all">
+            <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-200 shadow-sm hover:shadow-md">
               <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-5 border border-amber-500/20">
                 <Clock className="w-6 h-6" />
               </div>
@@ -736,7 +766,7 @@ function UnifiedLandingPageContent({ currentUser }: UnifiedLandingPageProps) {
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-purple-500/40 transition-all">
+            <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-200 shadow-sm hover:shadow-md">
               <div className="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-5 border border-purple-500/20">
                 <FileText className="w-6 h-6" />
               </div>
@@ -746,7 +776,7 @@ function UnifiedLandingPageContent({ currentUser }: UnifiedLandingPageProps) {
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-indigo-500/40 transition-all">
+            <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-indigo-500/40 hover:-translate-y-1 transition-all duration-200 shadow-sm hover:shadow-md">
               <div className="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-5 border border-indigo-500/20">
                 <Calendar className="w-6 h-6" />
               </div>
@@ -756,7 +786,7 @@ function UnifiedLandingPageContent({ currentUser }: UnifiedLandingPageProps) {
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-emerald-500/40 transition-all">
+            <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-emerald-500/40 hover:-translate-y-1 transition-all duration-200 shadow-sm hover:shadow-md">
               <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-5 border border-emerald-500/20">
                 <Users className="w-6 h-6" />
               </div>
@@ -766,7 +796,7 @@ function UnifiedLandingPageContent({ currentUser }: UnifiedLandingPageProps) {
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-sky-500/40 transition-all">
+            <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-sky-500/40 hover:-translate-y-1 transition-all duration-200 shadow-sm hover:shadow-md">
               <div className="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center mb-5 border border-sky-500/20">
                 <BarChart3 className="w-6 h-6" />
               </div>

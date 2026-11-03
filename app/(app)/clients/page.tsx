@@ -2,6 +2,7 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { redirect } from 'next/navigation'
 import ClientDirectoryView from '@/components/clients/ClientDirectoryView'
+import { PageTransition } from '@/components/ui/motion'
 
 export default async function ClientsPage() {
   const session = await auth()
@@ -18,5 +19,9 @@ export default async function ClientsPage() {
     orderBy: { name: 'asc' },
   })
 
-  return <ClientDirectoryView initialClients={clients} />
+  return (
+    <PageTransition>
+      <ClientDirectoryView initialClients={clients} />
+    </PageTransition>
+  )
 }

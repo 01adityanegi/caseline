@@ -8,6 +8,7 @@ import {
 import { redirect } from 'next/navigation'
 import { ALL_TEMPLATES, TEMPLATE_CATEGORIES } from '@/templates'
 import TemplatesClient from '@/components/agreements/TemplatesClient'
+import { PageTransition } from '@/components/ui/motion'
 
 export default async function TemplatesPage() {
   const session = await auth()
@@ -15,32 +16,34 @@ export default async function TemplatesPage() {
   if (session.user.role === 'CLIENT') redirect('/agreements')
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="font-serif text-2xl md:text-3xl font-bold text-foreground">
-              Agreement Template Library
-            </h1>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 border border-amber-500/20">
-              Bilingual (EN + HI)
-            </span>
+    <PageTransition>
+      <div className="space-y-6 max-w-[1400px]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="font-serif text-2xl md:text-3xl font-semibold text-foreground">
+                Agreement Template Library
+              </h1>
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 border border-amber-500/20">
+                Bilingual (EN + HI)
+              </span>
+            </div>
+            <p className="text-xs md:text-sm text-muted-foreground mt-1 max-w-2xl">
+              Choose from 14 verified legal agreement schemas for Indian jurisdiction. Structured for deterministic assembly and judicial AI refinement.
+            </p>
           </div>
-          <p className="text-xs md:text-sm text-muted-foreground mt-1">
-            Choose from 14 verified legal agreement schemas for Indian jurisdiction. Structured for deterministic assembly and judicial AI refinement.
-          </p>
+
+          <Link
+            href="/agreements/new"
+            className="btn-primary text-xs whitespace-nowrap self-start sm:self-auto shadow-sm"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+            Describe-to-Agreement
+          </Link>
         </div>
 
-        <Link
-          href="/agreements/new"
-          className="btn-primary text-xs whitespace-nowrap self-start sm:self-auto"
-        >
-          <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-          Describe-to-Agreement
-        </Link>
+        <TemplatesClient templates={ALL_TEMPLATES} categories={TEMPLATE_CATEGORIES} />
       </div>
-
-      <TemplatesClient templates={ALL_TEMPLATES} categories={TEMPLATE_CATEGORIES} />
-    </div>
+    </PageTransition>
   )
 }

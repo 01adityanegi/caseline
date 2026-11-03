@@ -10,8 +10,8 @@ import {
 import Link from 'next/link'
 import DashboardCharts from '@/components/dashboard/DashboardCharts'
 import AIBriefingCard from '@/components/dashboard/AIBriefingCard'
-
 import { getCaseFilter, getAgreementFilter, isClientUser } from '@/lib/rbac'
+import { PageTransition, StaggerList, StaggerItem, AnimatedCounter, RevealOnScroll } from '@/components/ui/motion'
 
 async function getDashboardData(user: any) {
   const orgId = user.organizationId
@@ -90,16 +90,22 @@ function KPICard({ title, value, icon: Icon, trend, color, suffix = '', href }: 
   href?: string
 }) {
   const content = (
-    <div className="kpi-card cursor-pointer">
+    <div className="card-premium p-5 cursor-pointer flex flex-col gap-3">
       <div className="flex items-start justify-between">
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color}`}>
+        <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${color} shadow-lg`}>
           <Icon className="w-5 h-5 text-white" />
         </div>
-        {trend && <span className="text-xs text-green-600 font-medium bg-green-50 px-2 py-0.5 rounded-full">{trend}</span>}
+        {trend && (
+          <span className="text-xs text-green-600 font-semibold bg-green-50 px-2.5 py-1 rounded-full border border-green-100">
+            {trend}
+          </span>
+        )}
       </div>
       <div>
-        <p className="text-3xl font-bold text-gray-900 font-mono">{value}{suffix}</p>
-        <p className="text-sm text-gray-500 mt-0.5">{title}</p>
+        <p className="text-3xl font-bold text-foreground font-mono tracking-tight">
+          <AnimatedCounter value={value} suffix={suffix} />
+        </p>
+        <p className="text-sm text-muted-foreground mt-0.5 font-medium">{title}</p>
       </div>
     </div>
   )
@@ -107,8 +113,8 @@ function KPICard({ title, value, icon: Icon, trend, color, suffix = '', href }: 
 }
 
 function RiskBadge({ score }: { score: number }) {
-  const color = score >= 90 ? 'bg-red-100 text-red-700' : score >= 70 ? 'bg-orange-100 text-orange-700' : 'bg-yellow-100 text-yellow-700'
-  return <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${color}`}>{score}</span>
+  const color = score >= 90 ? 'bg-red-100 text-red-700 border-red-200' : score >= 70 ? 'bg-orange-100 text-orange-700 border-orange-200' : 'bg-yellow-100 text-yellow-700 border-yellow-200'
+  return <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${color}`}>{score}</span>
 }
 
 export default async function DashboardPage() {
@@ -121,196 +127,228 @@ export default async function DashboardPage() {
   const firstName = session.user.name?.split(' ')[0]
 
   return (
-    <div className="space-y-6 max-w-[1400px]">
-      {/* Page header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="font-serif text-2xl font-semibold text-gray-900">{greeting}, {firstName}</h1>
-            {isClient && (
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
-                Client Portal
-              </span>
-            )}
+    <PageTransition>
+      <div className="space-y-6 max-w-[1400px]">
+        {/* Page header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="font-serif text-2xl md:text-3xl font-semibold text-foreground">
+                {greeting}, {firstName}
+              </h1>
+              {isClient && (
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+                  Client Portal
+                </span>
+              )}
+            </div>
+            <p className="text-sm text-muted-foreground mt-1">
+              {formatDate(new Date(), 'EEEE, dd MMMM yyyy')} — {data.kpis.activeCases} active {isClient ? 'matter(s) with firm' : 'cases'}
+            </p>
           </div>
-          <p className="text-sm text-gray-500 mt-1">
-            {formatDate(new Date(), 'EEEE, dd MMMM yyyy')} — {data.kpis.activeCases} active {isClient ? 'matter(s) with firm' : 'cases'}
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Link
-            href="/arguments"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-blue-500/10 text-blue-600 hover:bg-blue-500/20 border border-blue-500/20 transition-colors"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-blue-500" />
-            Argument AI
-          </Link>
-          {isClient ? (
-            <Link href="/agreements" className="btn-primary">
-              <FileText className="w-4 h-4" />
-              My Agreements
+          <div className="flex items-center gap-2 flex-wrap">
+            <Link
+              href="/arguments"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-blue-500/10 text-blue-600 hover:bg-blue-500/20 border border-blue-500/20 transition-all hover:shadow-sm"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+              Argument AI
             </Link>
-          ) : (
-            <Link href="/cases/new" className="btn-primary">
-              <Briefcase className="w-4 h-4" />
-              New Case
-            </Link>
-          )}
-        </div>
-      </div>
-
-      {/* KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <KPICard title={isClient ? "My Active Matters" : "Active Cases"} value={data.kpis.activeCases} icon={Briefcase} color="bg-blue-600" href="/cases" />
-        <KPICard title="Hearings This Week" value={data.kpis.hearingsThisWeek} icon={Calendar} color="bg-purple-600" href="/cases" />
-        <KPICard title="Overdue Deadlines" value={data.kpis.overdueDeadlines} icon={AlertTriangle} color={data.kpis.overdueDeadlines > 0 ? 'bg-red-600' : 'bg-green-600'} href="/cases" />
-        {isClient ? (
-          <KPICard title="Pending Agreements" value={data.kpis.pendingAgreements} icon={FileText} color="bg-amber-600" href="/agreements" />
-        ) : (
-          <KPICard title="Billable Hours (Month)" value={data.kpis.billableHours} icon={Clock} suffix="h" color="bg-amber-600" href="/billing" />
-        )}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column: AI Briefing + Charts */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* AI Daily Briefing */}
-          <Suspense fallback={<div className="h-28 skeleton rounded-xl" />}>
-            <AIBriefingCard kpis={data.kpis} />
-          </Suspense>
-
-          {/* Charts */}
-          <Suspense fallback={<div className="h-72 skeleton rounded-xl" />}>
-            <DashboardCharts
-              casesByStatus={data.casesByStatus}
-              casesByArea={data.casesByArea}
-              teamWorkload={data.teamWorkload}
-            />
-          </Suspense>
-
-          {/* At-Risk Deadlines */}
-          {data.atRiskDeadlines.length > 0 && (
-            <div className="bg-card rounded-xl border border-border p-5">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 text-orange-500" />
-                  <h3 className="font-semibold text-gray-900 text-sm">At-Risk Deadlines</h3>
-                </div>
-                <Link href="/cases?view=guardian" className="text-xs text-blue-600 hover:underline flex items-center gap-1">
-                  Run Guardian <ArrowRight className="w-3 h-3" />
-                </Link>
-              </div>
-              <div className="space-y-2">
-                {data.atRiskDeadlines.map(d => (
-                  <Link key={d.id} href={`/cases/${d.caseId}`} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
-                    <RiskBadge score={d.riskScore} />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-800 truncate">{d.title}</p>
-                      <p className="text-xs text-gray-500 truncate">{d.case.title} · Due {formatDate(d.date)}</p>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-gray-500" />
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Right Column: Today Panel + Activity */}
-        <div className="space-y-6">
-          {/* Today Panel */}
-          <div className="bg-card rounded-xl border border-border p-5">
-            <div className="flex items-center gap-2 mb-4">
-              <Calendar className="w-4 h-4 text-blue-600" />
-              <h3 className="font-semibold text-gray-900 text-sm">Today</h3>
-            </div>
-
-            {data.today.hearings.length === 0 && data.today.deadlines.length === 0 ? (
-              <div className="text-center py-6">
-                <CheckCircle2 className="w-8 h-8 text-green-400 mx-auto mb-2" />
-                <p className="text-sm text-gray-500">No hearings or deadlines today</p>
-              </div>
+            {isClient ? (
+              <Link href="/agreements" className="btn-primary">
+                <FileText className="w-4 h-4" />
+                My Agreements
+              </Link>
             ) : (
-              <div className="space-y-3">
-                {data.today.hearings.map(h => (
-                  <Link key={h.id} href={`/cases/${h.caseId}`} className="flex items-start gap-3 group">
-                    <div className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-800 group-hover:text-blue-600 transition-colors truncate">{h.title}</p>
-                      <p className="text-xs text-gray-500 truncate">{h.case.title}</p>
+              <Link href="/cases/new" className="btn-primary">
+                <Briefcase className="w-4 h-4" />
+                New Case
+              </Link>
+            )}
+          </div>
+        </div>
+
+        {/* KPI Cards */}
+        <StaggerList className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <StaggerItem>
+            <KPICard title={isClient ? 'My Active Matters' : 'Active Cases'} value={data.kpis.activeCases} icon={Briefcase} color="bg-blue-600" href="/cases" />
+          </StaggerItem>
+          <StaggerItem>
+            <KPICard title="Hearings This Week" value={data.kpis.hearingsThisWeek} icon={Calendar} color="bg-purple-600" href="/cases" />
+          </StaggerItem>
+          <StaggerItem>
+            <KPICard title="Overdue Deadlines" value={data.kpis.overdueDeadlines} icon={AlertTriangle} color={data.kpis.overdueDeadlines > 0 ? 'bg-red-600' : 'bg-green-600'} href="/cases" />
+          </StaggerItem>
+          <StaggerItem>
+            {isClient ? (
+              <KPICard title="Pending Agreements" value={data.kpis.pendingAgreements} icon={FileText} color="bg-amber-600" href="/agreements" />
+            ) : (
+              <KPICard title="Billable Hours (Month)" value={data.kpis.billableHours} icon={Clock} suffix="h" color="bg-amber-600" href="/billing" />
+            )}
+          </StaggerItem>
+        </StaggerList>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column: AI Briefing + Charts */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* AI Daily Briefing */}
+            <Suspense fallback={<div className="h-28 skeleton rounded-xl" />}>
+              <RevealOnScroll>
+                <AIBriefingCard kpis={data.kpis} />
+              </RevealOnScroll>
+            </Suspense>
+
+            {/* Charts */}
+            <Suspense fallback={<div className="h-72 skeleton rounded-xl" />}>
+              <RevealOnScroll>
+                <DashboardCharts
+                  casesByStatus={data.casesByStatus}
+                  casesByArea={data.casesByArea}
+                  teamWorkload={data.teamWorkload}
+                />
+              </RevealOnScroll>
+            </Suspense>
+
+            {/* At-Risk Deadlines */}
+            {data.atRiskDeadlines.length > 0 && (
+              <RevealOnScroll>
+                <div className="card-premium p-5">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center">
+                        <AlertTriangle className="w-4 h-4 text-orange-500" />
+                      </div>
+                      <h3 className="font-semibold text-foreground text-sm">At-Risk Deadlines</h3>
                     </div>
-                  </Link>
-                ))}
-                {data.today.deadlines.map(d => (
-                  <Link key={d.id} href={`/cases/${d.caseId}`} className="flex items-start gap-3 group">
-                    <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-800 group-hover:text-blue-600 transition-colors truncate">{d.title}</p>
-                      <p className="text-xs text-gray-500 truncate">{d.case.title}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+                    <Link href="/cases?view=guardian" className="text-xs text-blue-600 hover:underline flex items-center gap-1 font-medium">
+                      Run Guardian <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  </div>
+                  <div className="space-y-2">
+                    {data.atRiskDeadlines.map(d => (
+                      <Link key={d.id} href={`/cases/${d.caseId}`} className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors group">
+                        <RiskBadge score={d.riskScore} />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-foreground truncate">{d.title}</p>
+                          <p className="text-xs text-muted-foreground truncate">{d.case.title} · Due {formatDate(d.date)}</p>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-muted-foreground/40 group-hover:text-muted-foreground transition-colors" />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </RevealOnScroll>
             )}
           </div>
 
-          {/* Upcoming Deadlines */}
-          <div className="bg-card rounded-xl border border-border p-5">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-amber-500" />
-                <h3 className="font-semibold text-gray-900 text-sm">Upcoming Deadlines</h3>
-              </div>
-              <Link href="/calendar" className="text-xs text-blue-600 hover:underline">View all</Link>
-            </div>
-            <div className="space-y-3">
-              {data.upcomingDeadlines.length === 0 ? (
-                <p className="text-sm text-gray-400 text-center py-4">No upcoming deadlines</p>
-              ) : (
-                data.upcomingDeadlines.map(d => (
-                  <Link key={d.id} href={`/cases/${d.caseId}`} className="flex items-start gap-3 group">
-                    <div className="text-right flex-shrink-0 w-16">
-                      <p className="text-xs font-mono text-gray-900">{formatDate(d.date, 'dd MMM')}</p>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium text-gray-700 group-hover:text-blue-600 truncate">{d.title}</p>
-                      <p className="text-xs text-gray-400 truncate font-mono">{d.case.caseNumber}</p>
-                    </div>
-                  </Link>
-                ))
-              )}
-            </div>
-          </div>
-
-          {/* Activity Feed */}
-          <div className="bg-card rounded-xl border border-border p-5">
-            <div className="flex items-center gap-2 mb-4">
-              <Activity className="w-4 h-4 text-gray-400" />
-              <h3 className="font-semibold text-gray-900 text-sm">Recent Activity</h3>
-            </div>
-            <div className="space-y-3">
-              {data.recentActivity.length === 0 ? (
-                <p className="text-sm text-gray-400 text-center py-4">No recent activity</p>
-              ) : (
-                data.recentActivity.map((log, i) => (
-                  <div key={log.id} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <CircleDot className="w-3 h-3 text-gray-400" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs text-gray-700">
-                        <span className="font-medium">{log.user?.name || 'System'}</span>{' '}
-                        {log.action.toLowerCase().replace(/_/g, ' ')}
-                      </p>
-                      <p className="text-xs text-gray-400">{formatRelative(log.createdAt)}</p>
-                    </div>
+          {/* Right Column: Today Panel + Activity */}
+          <div className="space-y-6">
+            {/* Today Panel */}
+            <RevealOnScroll>
+              <div className="card-premium p-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+                    <Calendar className="w-4 h-4 text-blue-600" />
                   </div>
-                ))
-              )}
-            </div>
+                  <h3 className="font-semibold text-foreground text-sm">Today</h3>
+                </div>
+
+                {data.today.hearings.length === 0 && data.today.deadlines.length === 0 ? (
+                  <div className="text-center py-6">
+                    <CheckCircle2 className="w-8 h-8 text-green-400 mx-auto mb-2" />
+                    <p className="text-sm text-muted-foreground">No hearings or deadlines today</p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {data.today.hearings.map(h => (
+                      <Link key={h.id} href={`/cases/${h.caseId}`} className="flex items-start gap-3 group p-2 rounded-lg hover:bg-muted/40 transition-colors">
+                        <div className="w-2 h-2 rounded-full bg-purple-500 mt-2 flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-foreground group-hover:text-blue-600 transition-colors truncate">{h.title}</p>
+                          <p className="text-xs text-muted-foreground truncate">{h.case.title}</p>
+                        </div>
+                      </Link>
+                    ))}
+                    {data.today.deadlines.map(d => (
+                      <Link key={d.id} href={`/cases/${d.caseId}`} className="flex items-start gap-3 group p-2 rounded-lg hover:bg-muted/40 transition-colors">
+                        <div className="w-2 h-2 rounded-full bg-red-500 mt-2 flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-foreground group-hover:text-blue-600 transition-colors truncate">{d.title}</p>
+                          <p className="text-xs text-muted-foreground truncate">{d.case.title}</p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </RevealOnScroll>
+
+            {/* Upcoming Deadlines */}
+            <RevealOnScroll>
+              <div className="card-premium p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
+                      <Clock className="w-4 h-4 text-amber-600" />
+                    </div>
+                    <h3 className="font-semibold text-foreground text-sm">Upcoming Deadlines</h3>
+                  </div>
+                  <Link href="/calendar" className="text-xs text-blue-600 hover:underline font-medium">View all</Link>
+                </div>
+                <div className="space-y-3">
+                  {data.upcomingDeadlines.length === 0 ? (
+                    <p className="text-sm text-muted-foreground text-center py-4">No upcoming deadlines</p>
+                  ) : (
+                    data.upcomingDeadlines.map(d => (
+                      <Link key={d.id} href={`/cases/${d.caseId}`} className="flex items-start gap-3 group p-1 rounded-lg hover:bg-muted/40 transition-colors">
+                        <div className="text-right flex-shrink-0 w-14">
+                          <p className="text-xs font-mono font-semibold text-foreground">{formatDate(d.date, 'dd MMM')}</p>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-medium text-foreground group-hover:text-blue-600 truncate">{d.title}</p>
+                          <p className="text-xs text-muted-foreground truncate font-mono">{d.case.caseNumber}</p>
+                        </div>
+                      </Link>
+                    ))
+                  )}
+                </div>
+              </div>
+            </RevealOnScroll>
+
+            {/* Activity Feed */}
+            <RevealOnScroll>
+              <div className="card-premium p-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
+                    <Activity className="w-4 h-4 text-muted-foreground" />
+                  </div>
+                  <h3 className="font-semibold text-foreground text-sm">Recent Activity</h3>
+                </div>
+                <div className="space-y-3">
+                  {data.recentActivity.length === 0 ? (
+                    <p className="text-sm text-muted-foreground text-center py-4">No recent activity</p>
+                  ) : (
+                    data.recentActivity.map((log, i) => (
+                      <div key={log.id} className="flex items-start gap-3">
+                        <div className="w-7 h-7 rounded-full bg-muted flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <CircleDot className="w-3 h-3 text-muted-foreground" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs text-foreground">
+                            <span className="font-semibold">{log.user?.name || 'System'}</span>{' '}
+                            {log.action.toLowerCase().replace(/_/g, ' ')}
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-0.5">{formatRelative(log.createdAt)}</p>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </RevealOnScroll>
           </div>
         </div>
       </div>
-    </div>
+    </PageTransition>
   )
 }

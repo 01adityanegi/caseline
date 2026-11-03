@@ -3,6 +3,7 @@ import { prisma } from '@/lib/db'
 import { redirect } from 'next/navigation'
 import ArgumentAnalyzerClient from '@/components/arguments/ArgumentAnalyzerClient'
 import { getCaseFilter } from '@/lib/rbac'
+import { PageTransition } from '@/components/ui/motion'
 
 export const metadata = {
   title: 'AI Argument Evaluator | CaseLine',
@@ -30,9 +31,10 @@ export default async function ArgumentsPage() {
   })
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      <ArgumentAnalyzerClient cases={cases} />
-    </div>
+    <PageTransition>
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-4 sm:py-6">
+        <ArgumentAnalyzerClient cases={cases} />
+      </div>
+    </PageTransition>
   )
 }
-
