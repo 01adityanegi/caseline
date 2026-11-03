@@ -24,10 +24,8 @@ export default async function AppLayout({
 
   return (
     <div className="app-shell flex h-screen overflow-hidden bg-background">
-      <div className="hidden md:flex">
-        <Sidebar user={userData} />
-      </div>
-      <div className="main-content flex-1 flex flex-col overflow-hidden w-full">
+      <Sidebar user={userData} />
+      <div className="main-content flex-1 flex flex-col overflow-hidden w-full min-w-0">
         <Header />
         <main className="flex-1 overflow-y-auto p-4 md:p-6 pb-24 md:pb-6 bg-background">
           {children}

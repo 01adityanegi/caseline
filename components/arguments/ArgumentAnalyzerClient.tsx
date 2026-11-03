@@ -38,7 +38,9 @@ import {
   PlusCircle,
   ExternalLink,
   Save,
-  Wand2
+  Wand2,
+  Paperclip,
+  CheckCircle
 } from 'lucide-react'
 import { ArgumentAnalysisResult, DocumentInspectionResult } from '@/lib/ai/service'
 
@@ -98,6 +100,7 @@ interface SampleDocumentPreset {
   id: string
   title: string
   category: string
+  tag: string
   fileName: string
   fileType: string
   snippet: string
@@ -106,32 +109,36 @@ interface SampleDocumentPreset {
 const SAMPLE_DOCUMENT_PRESETS: SampleDocumentPreset[] = [
   {
     id: 'sample-rent-deed',
-    title: 'Residential Lease Deed with Unlawful Lockout Clause',
+    title: 'Residential Lease with Padlock Clause',
     category: 'Rental & Property',
+    tag: 'Delhi Apartment Lease',
     fileName: 'Delhi_Apartment_Rent_Agreement_2026.pdf',
     fileType: 'application/pdf',
     snippet: 'Residential Lease Deed executed between Rajesh Sharma (Landlord) and Vikram Sethi (Tenant) for Flat 402, Green Avenue, New Delhi. Clause 8 states that in the event of any default exceeding 7 days, the Landlord reserves the absolute right to padlock premises and disconnect power without judicial intervention. Security deposit of INR 75,000 is deemed non-refundable if tenant vacates within 12 months.'
   },
   {
     id: 'sample-freelance-sow',
-    title: 'Software Development Agreement with Withheld Deliverable',
+    title: 'Software Development Agreement',
     category: 'Business & Work',
+    tag: 'Enterprise SOW Contract',
     fileName: 'Enterprise_SDA_Agreement_Milestones.pdf',
     fileType: 'application/pdf',
     snippet: 'Master Software Development Agreement between Acme Technologies Pvt Ltd (Client) and CodeCraft Solutions LLP (Developer). Total fee INR 48,00,000. Client deployed Milestone 1 & 2 to live production but withheld final 40% milestone of INR 18,00,000 citing cosmetic changes. All IP was assigned upfront without deemed acceptance protocol.'
   },
   {
     id: 'sample-noncompete',
-    title: 'Employment Covenant with 2-Year Non-Compete Restraint',
+    title: 'Employment Covenant (2-Yr Non-Compete)',
     category: 'Employment & Labor',
+    tag: 'Appointment Letter Photo',
     fileName: 'Senior_Engineer_Employment_Covenant.png',
     fileType: 'image/png',
     snippet: 'Appointment Agreement and Restrictive Covenant for Lead Software Architect. Clause 14 imposes an absolute 24-month post-employment restraint prohibiting employee from joining or advising any competing technology enterprise, with forfeiture of experience and relieving letters on breach.'
   },
   {
     id: 'sample-bayana-receipt',
-    title: 'Property Bayana Contract with Unilateral Forfeiture',
+    title: 'Property Bayana Contract',
     category: 'Property Sale',
+    tag: 'Gurugram Plot Receipt',
     fileName: 'Gurugram_Plot_Bayana_Receipt_Scanned.jpg',
     fileType: 'image/jpeg',
     snippet: 'Agreement to Sell and Bayana Receipt for Plot No. 12, Sector 15, Gurugram. Total price INR 95,00,000. Buyer paid advance token money of INR 10,00,000. Clause 4 states if balance is not paid by the 30th day, the entire token money is unconditionally forfeited without requirement of Sub-Registrar notice.'
@@ -179,7 +186,6 @@ export default function ArgumentAnalyzerClient({
   const [selectedCaseId, setSelectedCaseId] = useState(initialCaseId)
   const [contextInput, setContextInput] = useState(PRESET_ARGUMENTS[0].context)
   const [roleFocus, setRoleFocus] = useState<'BOTH' | 'CLIENT' | 'OWNER'>('BOTH')
-  const [activeTab, setActiveTab] = useState<'all' | 'client' | 'owner' | 'improvements'>('all')
   const [showHindi, setShowHindi] = useState(false)
   const [textLoading, setTextLoading] = useState(false)
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
@@ -366,14 +372,14 @@ export default function ArgumentAnalyzerClient({
     switch (verdict) {
       case 'RIGHT':
         return {
-          bg: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-400',
+          bg: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-800 dark:text-emerald-300',
           badgeBg: 'bg-emerald-600 text-white',
           title: 'RIGHT: Legally Sound & Enforceable',
           icon: ShieldCheck
         }
       case 'WRONG':
         return {
-          bg: 'bg-rose-500/10 border-rose-500/30 text-rose-700 dark:text-rose-400',
+          bg: 'bg-rose-500/10 border-rose-500/30 text-rose-800 dark:text-rose-300',
           badgeBg: 'bg-rose-600 text-white',
           title: 'WRONG: Legally Flawed / Unenforceable Covenants Found',
           icon: ShieldAlert
@@ -381,7 +387,7 @@ export default function ArgumentAnalyzerClient({
       case 'AT_RISK':
       default:
         return {
-          bg: 'bg-amber-500/10 border-amber-500/30 text-amber-700 dark:text-amber-400',
+          bg: 'bg-amber-500/10 border-amber-500/30 text-amber-800 dark:text-amber-300',
           badgeBg: 'bg-amber-600 text-white',
           title: 'AT-RISK: Critical Statutory Omissions & Ambiguities',
           icon: AlertTriangle
@@ -390,82 +396,85 @@ export default function ArgumentAnalyzerClient({
   }
 
   return (
-    <div className="space-y-8">
-      {/* Page Title & Mission Banner */}
-      <div className="bg-gradient-to-r from-blue-900/40 via-indigo-900/20 to-slate-900/40 border border-blue-500/20 rounded-2xl p-6 md:p-8 backdrop-blur-sm relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-600 dark:text-blue-400 text-xs font-semibold">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+    <div className="space-y-6 max-w-[1400px]">
+      {/* Crisp Modern Header Card */}
+      <div className="bg-card border border-border rounded-2xl p-6 sm:p-7 shadow-xs relative overflow-hidden">
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
+          <div className="space-y-2 max-w-3xl">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800 text-xs font-semibold">
+              <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
               <span>AI Document &amp; Agreement Inspector + Template Creator</span>
             </div>
-            <h1 className="text-2xl md:text-3xl font-serif font-bold text-foreground tracking-tight">
+
+            <h1 className="text-2xl sm:text-3xl font-serif font-bold text-foreground tracking-tight">
               Upload Agreement Picture / PDF &amp; Check Right or Wrong
             </h1>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Upload scanned agreements, court arguments, or deed pictures. AI audits whether provisions are <strong className="text-foreground">Right or Wrong</strong> under Indian law, highlights <strong className="text-foreground">Advantages &amp; Disadvantages</strong> for clients and owners, provides concrete <strong className="text-foreground">Suggestions to Improve</strong>, saves it as a <strong className="text-foreground">Reusable Template</strong>, and can <strong className="text-foreground">Create the Same Agreement</strong> with 1-click!
+
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              Upload scanned agreements, court arguments, or deed pictures. AI audits whether provisions are <strong className="text-foreground font-semibold">Right or Wrong</strong> under Indian law, highlights <strong className="text-foreground font-semibold">Advantages &amp; Disadvantages</strong> for clients and owners, provides concrete <strong className="text-foreground font-semibold">Suggestions to Improve</strong>, saves it as a <strong className="text-foreground font-semibold">Reusable Template</strong>, and can <strong className="text-foreground font-semibold">Create the Same Agreement</strong> with 1-click!
             </p>
           </div>
 
-          <div className="flex items-center gap-3 self-start md:self-center flex-wrap">
+          <div className="flex items-center gap-3 shrink-0 self-start md:self-auto">
             <button
               onClick={() => setShowHindi(!showHindi)}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer shadow-2xs ${
                 showHindi
-                  ? 'bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/40 shadow-sm'
-                  : 'bg-card text-muted-foreground border-border hover:text-foreground'
+                  ? 'bg-amber-50 text-amber-800 dark:bg-amber-950/50 dark:text-amber-300 border-amber-300 dark:border-amber-700'
+                  : 'bg-background text-muted-foreground border-border hover:text-foreground hover:bg-muted/50'
               }`}
             >
-              <Languages className="w-4 h-4" />
-              <span>{showHindi ? 'हिंदी दृश्य (Hindi View Active)' : 'Bilingual Hindi/English'}</span>
+              <Languages className="w-4 h-4 text-primary" />
+              <span>{showHindi ? 'हिंदी दृश्य (Hindi Active)' : 'Bilingual Hindi/English'}</span>
             </button>
           </div>
         </div>
 
-        {/* MODE TOGGLE TABS */}
-        <div className="flex items-center gap-2 mt-6 pt-5 border-t border-border/40">
-          <button
-            onClick={() => {
-              setAnalysisMode('upload')
-              setError(null)
-            }}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              analysisMode === 'upload'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                : 'bg-background/80 text-muted-foreground hover:text-foreground hover:bg-background border border-border/50'
-            }`}
-          >
-            <Upload className="w-4 h-4" />
-            <span>Upload Agreement Picture / PDF (Scan &amp; Audit)</span>
-          </button>
+        {/* Clean Segmented Mode Control */}
+        <div className="mt-6 pt-5 border-t border-border/60">
+          <div className="inline-flex p-1 bg-muted/60 dark:bg-muted/30 rounded-xl border border-border/50 text-xs font-semibold gap-1">
+            <button
+              onClick={() => {
+                setAnalysisMode('upload')
+                setError(null)
+              }}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-all cursor-pointer ${
+                analysisMode === 'upload'
+                  ? 'bg-primary text-white shadow-xs font-bold'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <Upload className="w-3.5 h-3.5" />
+              <span>Upload Agreement Picture / PDF (Scan &amp; Audit)</span>
+            </button>
 
-          <button
-            onClick={() => {
-              setAnalysisMode('text')
-              setError(null)
-            }}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              analysisMode === 'text'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                : 'bg-background/80 text-muted-foreground hover:text-foreground hover:bg-background border border-border/50'
-            }`}
-          >
-            <BookOpen className="w-4 h-4" />
-            <span>Type / Paste Dispute Argument</span>
-          </button>
+            <button
+              onClick={() => {
+                setAnalysisMode('text')
+                setError(null)
+              }}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-all cursor-pointer ${
+                analysisMode === 'text'
+                  ? 'bg-primary text-white shadow-xs font-bold'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Type / Paste Dispute Argument</span>
+            </button>
+          </div>
         </div>
       </div>
 
       {error && (
-        <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-700 dark:text-rose-400 text-xs flex items-center gap-2">
+        <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-700 dark:text-rose-400 text-xs flex items-center gap-2 shadow-2xs">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{error}</span>
         </div>
       )}
 
       {templateSavedMsg && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs flex items-center justify-between gap-2">
+        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs flex items-center justify-between gap-2 shadow-2xs">
           <div className="flex items-center gap-2">
             <CheckCheck className="w-4 h-4 shrink-0 text-emerald-600" />
             <span className="font-medium">{templateSavedMsg}</span>
@@ -485,29 +494,33 @@ export default function ArgumentAnalyzerClient({
       {analysisMode === 'upload' && (
         <div className="space-y-6">
           <div className="card-premium p-6 space-y-6">
+            {/* Card Header with Cleaner Alignment */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-4">
               <div>
-                <h3 className="font-serif font-bold text-lg text-foreground flex items-center gap-2">
-                  <FileUp className="w-5 h-5 text-primary" />
-                  Select or Drop Agreement Document (PDF, PNG, JPG, WebP)
+                <h3 className="font-semibold text-base text-foreground flex items-center gap-2">
+                  <FileUp className="w-4 h-4 text-primary" />
+                  Upload Agreement (Picture or PDF)
                 </h3>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  Both client and lawyer can upload agreement pictures or PDFs for instant validity verification.
+                  Both client and lawyer can upload agreements for statutory validity check and template conversion.
                 </p>
               </div>
 
               {cases.length > 0 && (
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-muted-foreground">Link Matter:</span>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="text-xs text-muted-foreground font-medium flex items-center gap-1">
+                    <Briefcase className="w-3 h-3 text-muted-foreground" />
+                    Link Matter:
+                  </span>
                   <select
                     value={selectedCaseId}
                     onChange={(e) => setSelectedCaseId(e.target.value)}
-                    className="text-xs px-2.5 py-1.5 rounded-lg border border-input bg-background text-foreground"
+                    className="text-xs px-2.5 py-1.5 rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                   >
                     <option value="">No Matter Linked</option>
                     {cases.map((c) => (
                       <option key={c.id} value={c.id}>
-                        {c.caseNumber} - {c.title.slice(0, 25)}...
+                        {c.caseNumber} - {c.title.slice(0, 24)}...
                       </option>
                     ))}
                   </select>
@@ -515,12 +528,12 @@ export default function ArgumentAnalyzerClient({
               )}
             </div>
 
-            {/* Drag and Drop Upload Zone */}
+            {/* Drag and Drop Upload Zone - Polished & Compact */}
             <div
               onDragOver={(e) => e.preventDefault()}
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
-              className="border-2 border-dashed border-border hover:border-primary/50 bg-muted/20 hover:bg-muted/40 rounded-2xl p-8 text-center cursor-pointer transition-all space-y-3 group"
+              className="border-2 border-dashed border-border hover:border-primary/60 bg-muted/20 hover:bg-muted/40 rounded-2xl p-6 text-center cursor-pointer transition-all space-y-2.5 group"
             >
               <input
                 ref={fileInputRef}
@@ -530,65 +543,71 @@ export default function ArgumentAnalyzerClient({
                 className="hidden"
               />
 
-              <div className="w-14 h-14 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center mx-auto group-hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-900 flex items-center justify-center mx-auto group-hover:scale-105 transition-transform shadow-2xs">
                 {uploadedFileType?.startsWith('image/') ? (
-                  <ImageIcon className="w-7 h-7" />
+                  <ImageIcon className="w-6 h-6" />
                 ) : (
-                  <FileIcon className="w-7 h-7" />
+                  <FileIcon className="w-6 h-6" />
                 )}
               </div>
 
               {uploadedFile ? (
                 <div>
-                  <p className="text-sm font-bold text-foreground flex items-center justify-center gap-2">
+                  <p className="text-sm font-semibold text-foreground flex items-center justify-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-emerald-600" />
                     <span>{uploadedFileName}</span>
                     <span className="text-xs font-mono font-normal text-muted-foreground">
                       ({(uploadedFile.size / 1024).toFixed(1)} KB)
                     </span>
                   </p>
-                  <p className="text-xs text-emerald-600 font-semibold mt-1">Ready for Judicial Audit</p>
+                  <p className="text-xs text-emerald-600 font-semibold mt-1">Ready for Judicial Audit &bull; Click to change</p>
                 </div>
               ) : (
                 <div>
                   <p className="text-sm font-semibold text-foreground">
                     Click to browse or drag and drop your agreement file here
                   </p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Supports Scanned Deeds, Contract PDFs, Camera Photos, Rent Receipts, SOWs (Max 15MB)
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    Supports PDF contracts, scanned legal deeds, camera photos (PNG, JPG, WebP) up to 15MB
                   </p>
                 </div>
               )}
             </div>
 
-            {/* Sample Presets to Test Instantly */}
-            <div className="space-y-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+            {/* Sample Presets to Test Instantly - Polished Grid */}
+            <div className="space-y-2.5">
+              <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                Or Test Immediately with 1-Click Sample Legal Agreements:
+                Or select a sample legal agreement to test immediately:
               </span>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 {SAMPLE_DOCUMENT_PRESETS.map((preset) => (
                   <button
                     key={preset.id}
                     type="button"
                     onClick={() => handleSelectSampleDoc(preset)}
-                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                    className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-2 shadow-2xs ${
                       selectedSampleId === preset.id
-                        ? 'border-blue-500 bg-blue-500/10 shadow-sm'
-                        : 'border-border bg-card hover:border-primary/30 hover:bg-muted/30'
+                        ? 'border-primary bg-primary/5 ring-1 ring-primary/30'
+                        : 'border-border bg-card hover:border-primary/40 hover:bg-muted/40'
                     }`}
                   >
                     <div>
-                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-mono">
-                        {preset.category}
-                      </span>
-                      <p className="text-xs font-semibold text-foreground mt-1 line-clamp-2">
+                      <div className="flex items-center justify-between gap-1 mb-1">
+                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
+                          {preset.category}
+                        </span>
+                        {selectedSampleId === preset.id && (
+                          <span className="w-2 h-2 rounded-full bg-primary" />
+                        )}
+                      </div>
+                      <p className="text-xs font-semibold text-foreground leading-snug">
                         {preset.title}
                       </p>
                     </div>
-                    <span className="text-[10px] text-primary font-mono mt-2 truncate flex items-center gap-1">
+                    <span className="text-[11px] text-primary font-medium flex items-center gap-1 truncate">
                       <FileText className="w-3 h-3 shrink-0" />
-                      {preset.fileName}
+                      {preset.tag}
                     </span>
                   </button>
                 ))}
@@ -597,12 +616,12 @@ export default function ArgumentAnalyzerClient({
 
             {/* Extracted Text Box Preview & Editor */}
             <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
-                <label className="text-xs font-semibold text-foreground">
-                  Document Content / Extracted Agreement Text
+              <div className="flex items-center justify-between text-xs">
+                <label className="font-semibold text-foreground">
+                  Document Text / OCR Preview
                 </label>
-                <span className="text-[10px] text-muted-foreground">
-                  OCR / PDF Text Extraction Active
+                <span className="text-[11px] text-muted-foreground font-mono">
+                  {extractedDocText.length} characters &bull; OCR / Text Active
                 </span>
               </div>
               <textarea
@@ -610,14 +629,14 @@ export default function ArgumentAnalyzerClient({
                 value={extractedDocText}
                 onChange={(e) => setExtractedDocText(e.target.value)}
                 placeholder="Paste contract clauses or let the file reader extract automatically..."
-                className="w-full p-3 rounded-xl border border-input bg-background text-xs font-mono text-foreground leading-relaxed focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full p-3.5 rounded-xl border border-input bg-background text-xs font-mono text-foreground leading-relaxed focus:outline-none focus:ring-2 focus:ring-ring"
               />
             </div>
 
-            {/* Submit Action */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            {/* Submit Action Bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-border/60">
+              <div className="flex items-center gap-2 text-xs text-muted-foreground font-medium">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>Audited against Indian Contract Act 1872 &amp; Specific Relief Act 1963</span>
               </div>
 
@@ -633,7 +652,7 @@ export default function ArgumentAnalyzerClient({
                   </>
                 ) : (
                   <>
-                    <Wand2 className="w-4 h-4 text-amber-300" />
+                    <Sparkles className="w-4 h-4 text-amber-300" />
                     <span>Inspect Agreement (Right or Wrong?)</span>
                   </>
                 )}
@@ -651,14 +670,14 @@ export default function ArgumentAnalyzerClient({
                 const style = getVerdictStyle(docInspectionResult.verdict)
                 const Icon = style.icon
                 return (
-                  <div className={`p-6 rounded-2xl border ${style.bg} space-y-4 shadow-sm`}>
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white ${style.badgeBg} shadow-sm shrink-0`}>
+                  <div className={`p-6 rounded-2xl border ${style.bg} space-y-4 shadow-xs`}>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div className="flex items-start sm:items-center gap-3">
+                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-white ${style.badgeBg} shadow-sm shrink-0 mt-0.5 sm:mt-0`}>
                           <Icon className="w-6 h-6" />
                         </div>
                         <div>
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 flex-wrap">
                             <span className={`text-[11px] font-black px-2.5 py-0.5 rounded-full ${style.badgeBg}`}>
                               {docInspectionResult.verdict === 'RIGHT' ? 'RIGHT / ENFORCEABLE' : docInspectionResult.verdict === 'WRONG' ? 'WRONG / VOID COVENANTS' : 'AT-RISK / DEFECTIVE'}
                             </span>
@@ -673,21 +692,21 @@ export default function ArgumentAnalyzerClient({
                       </div>
 
                       {/* Flagship Action Buttons */}
-                      <div className="flex items-center gap-2 flex-wrap self-start sm:self-auto">
+                      <div className="flex items-center gap-2 flex-wrap self-start sm:self-auto shrink-0">
                         <button
                           onClick={handleSaveAsTemplate}
                           disabled={savingTemplate}
-                          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-card border border-border hover:bg-muted text-foreground transition-all cursor-pointer shadow-xs"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-card border border-border hover:bg-muted text-foreground transition-all cursor-pointer shadow-2xs"
                           title="Save this inspected agreement as a reusable template"
                         >
-                          <Save className="w-3.5 h-3.5 text-blue-600" />
+                          <Save className="w-3.5 h-3.5 text-primary" />
                           <span>{savingTemplate ? 'Saving...' : 'Save as Template'}</span>
                         </button>
 
                         <button
                           onClick={handleCreateSameAgreement}
                           disabled={creatingAgreement}
-                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-primary hover:bg-primary/90 text-white transition-all cursor-pointer shadow-md shadow-primary/20"
+                          className="btn-primary text-xs font-bold px-4 py-2 shadow-md cursor-pointer"
                           title="Generate a fresh, legally compliant draft from this document"
                         >
                           <PlusCircle className="w-3.5 h-3.5 text-amber-300" />
@@ -696,7 +715,7 @@ export default function ArgumentAnalyzerClient({
                       </div>
                     </div>
 
-                    <p className="text-sm text-foreground/90 leading-relaxed font-medium">
+                    <p className="text-sm text-foreground leading-relaxed font-medium">
                       {showHindi ? docInspectionResult.verdictSummaryHi : docInspectionResult.verdictSummary}
                     </p>
 
@@ -994,8 +1013,8 @@ export default function ArgumentAnalyzerClient({
           <div className="card-premium p-6 space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-4">
               <div>
-                <h3 className="font-serif font-bold text-lg text-foreground flex items-center gap-2">
-                  <Scale className="w-5 h-5 text-primary" />
+                <h3 className="font-semibold text-base text-foreground flex items-center gap-2">
+                  <Scale className="w-4 h-4 text-primary" />
                   Dispute Claim &amp; Argument Input
                 </h3>
                 <p className="text-xs text-muted-foreground mt-0.5">
@@ -1003,12 +1022,12 @@ export default function ArgumentAnalyzerClient({
                 </p>
               </div>
 
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground">Focus:</span>
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="text-xs text-muted-foreground font-medium">Focus:</span>
                 <select
                   value={roleFocus}
                   onChange={(e) => setRoleFocus(e.target.value as any)}
-                  className="text-xs px-2.5 py-1.5 rounded-lg border border-input bg-background text-foreground"
+                  className="text-xs px-2.5 py-1.5 rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="BOTH">Client &amp; Owner Both</option>
                   <option value="CLIENT">Client Focus</option>
@@ -1019,9 +1038,9 @@ export default function ArgumentAnalyzerClient({
 
             {/* Presets */}
             <div className="space-y-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+              <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                Select Dispute Preset:
+                Select a dispute preset:
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
                 {PRESET_ARGUMENTS.map((preset) => (
@@ -1032,9 +1051,9 @@ export default function ArgumentAnalyzerClient({
                       setArgumentText(preset.text)
                       setContextInput(preset.context)
                     }}
-                    className="p-3 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-muted/30 text-left transition-all cursor-pointer"
+                    className="p-3.5 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-muted/40 text-left transition-all cursor-pointer shadow-2xs"
                   >
-                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-mono">
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-mono">
                       {preset.category}
                     </span>
                     <p className="text-xs font-semibold text-foreground mt-1 line-clamp-1">{preset.title}</p>
@@ -1045,25 +1064,25 @@ export default function ArgumentAnalyzerClient({
             </div>
 
             {/* Textarea */}
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <label className="text-xs font-semibold text-foreground">Dispute Claim / Argument Text</label>
               <textarea
                 rows={5}
                 value={argumentText}
                 onChange={(e) => setArgumentText(e.target.value)}
                 placeholder="Describe the contractual dispute or argument..."
-                className="w-full p-3.5 rounded-xl border border-input bg-background text-xs font-mono text-foreground leading-relaxed focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full p-3.5 rounded-xl border border-input bg-background text-xs font-mono text-foreground leading-relaxed focus:outline-none focus:ring-2 focus:ring-ring"
               />
             </div>
 
-            <div className="flex items-center justify-between gap-3 pt-2">
-              <span className="text-xs text-muted-foreground">
-                Evaluates strengths, vulnerabilities, and counter-arguments.
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-border/60">
+              <span className="text-xs text-muted-foreground font-medium">
+                Evaluates strengths, vulnerabilities, and counter-arguments under Indian jurisprudence.
               </span>
               <button
                 onClick={handleAnalyzeText}
                 disabled={textLoading}
-                className="btn-primary text-xs font-bold px-6 py-2.5 shadow-md cursor-pointer"
+                className="btn-primary text-xs font-bold px-6 py-2.5 shadow-md self-start sm:self-auto cursor-pointer"
               >
                 {textLoading ? (
                   <>
@@ -1095,7 +1114,7 @@ export default function ArgumentAnalyzerClient({
                     Risk Level: {textResult.riskLevel}
                   </span>
                 </div>
-                <p className="text-sm text-foreground/90 leading-relaxed">
+                <p className="text-sm text-foreground/90 leading-relaxed font-medium">
                   {showHindi ? textResult.summaryHi : textResult.summary}
                 </p>
               </div>

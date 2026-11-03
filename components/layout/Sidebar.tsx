@@ -68,7 +68,7 @@ export default function Sidebar({ user }: SidebarProps) {
     <motion.aside
       animate={{ width: collapsed ? 64 : 240 }}
       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      className="flex flex-col h-screen flex-shrink-0 overflow-hidden"
+      className="hidden md:flex flex-col h-screen flex-shrink-0 overflow-hidden select-none z-30"
       style={{ background: '#0B1B33', borderRight: '1px solid rgba(255,255,255,0.08)' }}
     >
       {/* Logo */}
