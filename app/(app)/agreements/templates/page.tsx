@@ -33,13 +33,22 @@ export default async function TemplatesPage() {
             </p>
           </div>
 
-          <Link
-            href="/agreements/new"
-            className="btn-primary text-xs whitespace-nowrap self-start sm:self-auto shadow-sm"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-            Describe-to-Agreement
-          </Link>
+          <div className="flex items-center gap-2.5 flex-wrap self-start sm:self-auto">
+            <Link
+              href="/arguments"
+              className="px-3.5 py-2 rounded-xl text-xs font-semibold border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 transition-colors inline-flex items-center gap-1.5 shadow-2xs"
+            >
+              <FileCheck className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              Upload &amp; Convert to Template
+            </Link>
+            <Link
+              href="/agreements/new"
+              className="btn-primary text-xs whitespace-nowrap shadow-sm"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+              Describe-to-Agreement
+            </Link>
+          </div>
         </div>
 
         <TemplatesClient templates={ALL_TEMPLATES} categories={TEMPLATE_CATEGORIES} />

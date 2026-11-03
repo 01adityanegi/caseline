@@ -65,3 +65,62 @@ test('AI Argument Analyzer - Handles General Custom Arguments Gracefully', async
   assert.ok(result.whatWillImprove.strongerRevisedArgumentEn, 'Has reformed argument')
 })
 
+test('AI Document Inspector - Audits Lease Agreement Document and Detects Unlawful Lockout Clause', async () => {
+  const { aiInspectDocumentAgreement } = await import('../lib/ai/service')
+
+  const documentSnippet =
+    'Residential Lease Agreement executed on 01 Dec 2026. Clause 8: In case rent is delayed by 7 days, the Landlord shall immediately padlock the premises and disconnect electricity without court order.'
+  
+  const result = await aiInspectDocumentAgreement({
+    fileName: 'Lease_Agreement_Padlock_Clause.pdf',
+    fileType: 'application/pdf',
+    extractedText: documentSnippet,
+    userRole: 'BOTH',
+  })
+
+  // Verdict check (Right or Wrong)
+  assert.equal(result.verdict, 'WRONG', 'Must identify illegal lockout clause as WRONG/unlawful')
+  assert.ok(result.verdictBadge.includes('WRONG'), 'Verdict badge highlights illegality')
+  assert.ok(result.statutoryValidityScore < 50, 'Validity score reflects severe flaw')
+  assert.ok(result.statutoryGrounds.includes('Transfer of Property Act'), 'Cites Transfer of Property Act')
+
+  // Why right or wrong statutory audit
+  assert.ok(Array.isArray(result.whyRightOrWrong) && result.whyRightOrWrong.length > 0, 'Contains statutory audit points')
+  assert.ok(result.whyRightOrWrong.some(item => item.status === 'FAIL'), 'Contains FAIL statutory points')
+
+  // Client and Owner Advantages / Disadvantages
+  assert.ok(result.clientPerspective.advantages.length > 0, 'Client has advantages')
+  assert.ok(result.clientPerspective.disadvantages.length > 0, 'Client has disadvantages')
+  assert.ok(result.ownerPerspective.advantages.length > 0, 'Owner has advantages')
+  assert.ok(result.ownerPerspective.disadvantages.length > 0, 'Owner has disadvantages')
+
+  // Suggestions to improve
+  assert.ok(result.suggestionsToImprove.recommendedChanges.length > 0, 'Has redline suggestions')
+  assert.ok(result.suggestionsToImprove.watertightRevisedAgreementEn.length > 50, 'Has watertight revised draft')
+
+  // Extracted template metadata
+  assert.ok(result.extractedTemplate.suggestedTitle, 'Has extracted template title')
+  assert.ok(result.extractedTemplate.category === 'Rental & Property', 'Classified in Rental & Property')
+  assert.ok(result.extractedTemplate.clauses.length >= 3, 'Extracts structured clauses')
+})
+
+test('AI Document Inspector - Audits Employment Non-Compete and Flags Section 27 Restraint of Trade', async () => {
+  const { aiInspectDocumentAgreement } = await import('../lib/ai/service')
+
+  const nonCompeteSnippet =
+    'Employment Agreement and Covenant. Employee shall not work for any competitor in India for 2 years post-resignation or termination.'
+
+  const result = await aiInspectDocumentAgreement({
+    fileName: 'Employee_Non_Compete_Covenant.png',
+    fileType: 'image/png',
+    extractedText: nonCompeteSnippet,
+    userRole: 'LAWYER',
+  })
+
+  assert.equal(result.verdict, 'WRONG', 'Section 27 non-compete is void/wrong')
+  assert.ok(result.statutoryGrounds.includes('Section 27'), 'Explicitly cites Section 27')
+  assert.ok(result.suggestionsToImprove.recommendedChanges.some(c => c.clauseName.toLowerCase().includes('compete')), 'Provides non-compete redline')
+  assert.ok(result.extractedTemplate.suggestedTitle.toLowerCase().includes('confidentiality') || result.extractedTemplate.suggestedTitle.toLowerCase().includes('employment'), 'Generates compliant template')
+})
+
+

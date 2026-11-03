@@ -56,6 +56,13 @@ export default async function AgreementsDashboardPage() {
           </div>
 
           <div className="flex items-center gap-2.5 flex-wrap self-start sm:self-auto">
+            <Link
+              href="/arguments"
+              className="px-3.5 py-2 rounded-xl text-xs font-semibold border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 transition-colors inline-flex items-center gap-1.5 min-h-[40px] shadow-2xs"
+            >
+              <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              Upload &amp; Inspect (Right or Wrong?)
+            </Link>
             {!isClient && (
               <Link
                 href="/agreements/templates"

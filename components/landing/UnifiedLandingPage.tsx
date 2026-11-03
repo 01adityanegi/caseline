@@ -702,7 +702,7 @@ function UnifiedLandingPageContent({ currentUser }: UnifiedLandingPageProps) {
         </div>
       </section>
 
-      {/* Flagship Feature: AI Argument Dissector */}
+      {/* Flagship Feature: AI Agreement & Argument Inspector */}
       <section id="argument-ai" className="py-16 bg-slate-900/60 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-6">
           <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900 via-blue-950/40 to-slate-900 border border-blue-500/30 shadow-xl relative overflow-hidden">
@@ -710,21 +710,27 @@ function UnifiedLandingPageContent({ currentUser }: UnifiedLandingPageProps) {
               <div className="space-y-3 max-w-2xl">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-semibold">
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Flagship AI Feature</span>
+                  <span>Flagship AI Feature: Upload &amp; Inspect</span>
                 </div>
                 <h3 className="text-2xl font-bold text-white font-serif">
-                  AI Argument Dissector &amp; Client/Owner Optimizer
+                  Upload Agreement Picture / PDF &bull; Check Right or Wrong
                 </h3>
                 <p className="text-sm text-slate-300 leading-relaxed">
-                  Our AI evaluates any dispute argument in simple, non-lawyer language. It analyzes advantages, disadvantages, and strategic risks from both the <strong>Client</strong> and <strong>Owner</strong> perspectives, and gives you a concrete breakdown of <strong>What Will Improve</strong>—including missing evidence, pre-emptive counter-arguments, and watertight reformulations.
+                  Both <strong>clients</strong> and <strong>lawyers</strong> can upload an agreement photo or PDF. Our judicial AI instantly verifies whether the agreement is <strong>Right or Wrong</strong> under Indian law, highlights <strong>Advantages &amp; Disadvantages</strong> from both perspectives, provides actionable <strong>Suggestions to Improve</strong> with redline amendments, saves it as a <strong>Reusable Template</strong>, and can <strong>Create the Same Agreement</strong> with 1-click for digital e-signing!
                 </p>
+                <div className="flex items-center gap-3 pt-2 text-xs text-slate-400 flex-wrap">
+                  <span className="flex items-center gap-1"><Check className="w-3.5 h-3.5 text-emerald-400" /> PDF &amp; Picture Upload (OCR)</span>
+                  <span className="flex items-center gap-1"><Check className="w-3.5 h-3.5 text-emerald-400" /> Right vs Wrong Validity Verdict</span>
+                  <span className="flex items-center gap-1"><Check className="w-3.5 h-3.5 text-emerald-400" /> 1-Click Save as Template</span>
+                  <span className="flex items-center gap-1"><Check className="w-3.5 h-3.5 text-emerald-400" /> 1-Click Generate Agreement</span>
+                </div>
               </div>
               <div className="flex-shrink-0">
                 <Link
                   href="/arguments"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-lg shadow-blue-500/25 transition-all"
                 >
-                  Try Argument AI
+                  Upload &amp; Inspect Agreement
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>

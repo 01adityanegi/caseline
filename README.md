@@ -44,6 +44,14 @@ Legal teams across India face fragmented case files, missed limitation periods, 
 - **Time Tracking & Invoicing**: Billable hour timers and Indian GST compliant invoices.
 
 #### 3. AI Judicial Copilot & Argument Dissector
+- **Upload Agreement Picture & PDF (Check Right or Wrong)**:
+  - Both **clients** and **lawyers** can upload agreements as camera pictures (PNG, JPG, WebP) or PDFs.
+  - **Right or Wrong Verdict**: Instantly audits whether an agreement is legally **RIGHT (Valid & Enforceable)**, **WRONG (Void/Unenforceable)**, or **AT-RISK (Deficient/Vulnerable)** under Indian statutes (Indian Contract Act 1872, Registration Act 1908, Specific Relief Act 1963).
+  - **Statutory Audit Checklist**: Line-by-line PASS / FAIL / WARNING breakdowns citing statutory sections (e.g. Section 27 Restraint of Trade, Section 74 Penalty vs Liquidated Damages, Section 106 Notice to Quit).
+  - **Advantages & Disadvantages**: Analyzes the agreement from both the **Client** and **Owner / Lawyer** viewpoints with simple-language takeaways in English & Hindi.
+  - **Suggestions to Improve**: Specific redline replacements for void clauses, plus missing mandatory clauses (Arbitration, Cure Notice, Stamp Duty).
+  - **Save as Reusable Template**: AI extracts the agreement structure, placeholders (`{{...}}`), and clauses, saving it directly into the CaseLine Template Library.
+  - **Create the Same Agreement**: 1-click button to immediately generate a fresh, legally compliant agreement draft from the uploaded document, pre-loaded for drafting, bilingual review, and digital e-signing!
 - **AI Argument Evaluator & Optimizer (Client & Owner)**:
   - Dissects any legal claim, dispute stance, or contract clause in simple, plain language.
   - Generates clear, non-jargon **Advantages and Disadvantages**.
