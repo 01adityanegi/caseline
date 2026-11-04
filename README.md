@@ -1,5 +1,6 @@
-# CaseLine — Autonomous Legal OS & AgreementStudio
+# ⚖️ CaseLine — Autonomous Legal OS & AgreementStudio
 
+[![HackIndia 2026](https://img.shields.io/badge/HackIndia-2026-blue?style=flat-square)](https://github.com/HackIndiaXYZ/ai-for-lawyers-hackathon-litti-choka)
 [![Next.js](https://img.shields.io/badge/Next.js-16.4.3-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.3.0-blue?style=flat-square&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
@@ -87,8 +88,8 @@ Legal teams across India face fragmented case files, missed limitation periods, 
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/01adityanegi/caseline.git
-cd caseline
+git clone https://github.com/HackIndiaXYZ/ai-for-lawyers-hackathon-litti-choka.git
+cd ai-for-lawyers-hackathon-litti-choka
 ```
 
 ### 2. Install Dependencies
@@ -169,6 +170,16 @@ CaseLine is responsive across mobile, tablet, and desktop viewports:
 - **Dynamic Viewport Height (`dvh`)**: Immune to mobile address bar collapse and layout shifts.
 - **Touch-Optimized Canvas**: Smooth digital signature capture with touch-action isolation.
 - **Font Safeguards**: 16px minimum on inputs preventing iOS Safari auto-zoom.
+
+---
+
+## 👨‍💻 Hackathon Project
+
+- **Event**: HackIndia 2026
+- **Team Name**: Litti Choka
+- **Project Name**: CaseLine
+- **Category**: AI for Lawyers
+- **Repository**: [https://github.com/HackIndiaXYZ/ai-for-lawyers-hackathon-litti-choka](https://github.com/HackIndiaXYZ/ai-for-lawyers-hackathon-litti-choka)
 
 ---
 
